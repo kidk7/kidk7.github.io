@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Yam Archive</title>
+  <style>
+    body { font-family: 'Arial', sans-serif; margin: 0; background: #fffbe7; color: #4e3900; }
+    header {
+      background: #ffda3c; color: #4e3900;
+      border-bottom: 3px solid #ecc700;
+      box-shadow: 0 2px 8px rgba(255,218,60,0.15);
+      position: relative; padding: 32px 0 24px 0; margin-bottom:0;
+      display:flex; justify-content:center; align-items:center;
+    }
+    #siteName {
+      display: inline-block;
+      font-weight: 800; font-size: 2em;
+      letter-spacing: 2px; text-align:center;
+      border: 3.5px solid #e7be17;
+      border-radius: 18px; padding: 14px 40px;
+      background:#fffde8;
+      box-shadow:0 2px 14px rgba(255,220,70,0.18);
+      position: relative;
+    }
+    .header-right {
+      position: absolute; right: 5vw; top: 32px; display: flex; gap: 10px;
+      font-size: 0.96em;
+    }
+    .header-link {
+      background: none; color: #ad8e01; font-weight: 650; border: none; padding: 3px 8px;
+      border-radius: 5px; text-decoration: none; cursor: pointer;
+      font-size: 0.93em; margin-left: 2px; transition: color 0.18s;
+    }
+    .header-link:hover { color: #d5ad00; background: #fff3c2; }
+    /* 필터 영역 공통 스타일 */
+    .filter-bar {
+      background: #fff2b2;
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      padding: 14px 0 13px 0;
+      border-bottom: 1.5px solid #fded8d;
+      margin: 0 auto 6px auto;
+      max-width: 700px;
+    }
+    .filter-bar button {
+      background: #ffe065; border: none; border-radius: 7px;
+      padding: 10px 22px; cursor: pointer; font-weight: 700; color: #855900;
+      font-size: 1.05rem; margin-bottom: 5px; transition: background 0.2s, color 0.2s;
+    }
+    .filter-bar button:hover, .filter-bar button.active {
+      background: #ffe998; color: #d5ad00; outline: 2px solid #ffe065;
+    }
+    .filter-tags-center {
+      max-width: 700px;
+      margin: 0 auto 24px auto;
+      gap: 22px; /* 간격 통일 */
+    }
+    /* 랭킹 박스 스타일 */
+    #rankingBox {
+      position: absolute;
+      left: 20px;
+      top: 85px;
+      z-index: 210;
+      background: #fffbe7;
+      border: 2px solid #e7be17;
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 14px rgba(255,220,70,0.14);
+      min-width: 170px;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.95em;
+      color: #856300;
+    }
+    #rankingBox h4 {
+      margin: 0 0 10px 0;
+      color: #ad8e01;
+      font-weight: 700;
+    }
+    #rankingList {
+      margin: 0;
+      padding-left: 18px;
+    }
+    #restaurantList { max-width: 660px; margin: 0 auto 24px auto; background: #fffde8;
+      padding: 25px 22px; border-radius: 12px; box-shadow: 0 2px 13px rgba(255,215,57,0.13);}
+    ul.restaurants { list-style: none; padding: 0; margin: 0; }
+    .restaurant-item {
+      display: flex; align-items: center; gap: 18px;
+      border-bottom: 1px solid #fee975; padding: 18px 0;
+      transition: background 0.2s; min-height: 110px; cursor: pointer;
+    }
+    .restaurant-item:last-child { border-bottom: none; }
+    .thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 10px; box-shadow: 0 1px 3px rgba(240,185,55,0.12);}
+    .dish-thumb { width: 70px; height: 70px; object-fit: cover; border-radius: 9px; box-shadow: 0 1px 3px rgba(245,190,51,0.13);}
+    .info-block { display: flex; flex-direction: column; gap: 8px; flex: 1 1 0%; }
+    .restaurant-name { font-size: 1.18em; font-weight: 700; }
+    .dish-name { font-size: 0.95em; font-weight: 450; color: #c98800; margin-top: 5px;}
+    .modal-bg {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background:rgba(60,50,10,0.24);
+      display:flex; align-items: center; justify-content: center; z-index: 1001;
+    }
+    .modal-box {
+      background: #fffde8; min-width: 320px; max-width: 92vw; padding: 28px 34px 19px 34px;
+      border-radius:16px; box-shadow: 0 10px 32px rgba(80,60,0,0.19); position: relative;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .modal-box h3 { margin: 6px 0 11px 0; font-size:1.34em; color: #be9003;}
+    .modal-box img { width: 110px; height: 110px; object-fit: cover; border-radius: 13px; margin-bottom: 20px; }
+    .modal-box .addrs { font-size:1.04em; color: #666500; margin: 3px 0 7px 0; }
+    .modal-box .menus { font-weight: 600; margin-top: 10px; font-size: 1.07em;}
+    .close-btn {
+      position: absolute; top: 7px; right: 15px; background: #ffd700; border: none;
+      color: #874c00; font-size: 1.5em; cursor:pointer; border-radius: 50%; width: 33px; height: 33px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span id="siteName">Yam Archive</span>
+    <div class="header-right">
+      <a href="#" class="header-link" style="font-size:0.97em;">로그인</a>
+      <a href="#" class="header-link" style="font-size:0.97em;">고객센터</a>
+    </div>
+  </header>
+
+  <!-- 랭킹 박스 -->
+  <div id="rankingBox">
+    <h4>🍽️ 인기 랭킹</h4>
+    <ol id="rankingList"></ol>
+  </div>
+
+  <!-- 위치 필터 -->
+  <nav id="categoryBar" class="filter-bar">
+    <button class="active" data-cat="건대입구">건대입구</button>
+    <button data-cat="중문">중문</button>
+    <button data-cat="후문">후문</button>
+    <button data-cat="어린이대공원">어린이대공원</button>
+  </nav>
+
+  <!-- 식단 필터 -->
+  <nav class="filter-bar filter-tags-center">
+    <button class="tag-btn" data-tag="vegan">비건</button>
+    <button class="tag-btn" data-tag="halal">할랄</button>
+    <button class="tag-btn" data-tag="glutenfree">글루텐프리</button>
+    <button class="tag-btn" data-tag="under10k">만원이하</button>
+  </nav>
+
+  <section id="restaurantList"></section>
+  <div id="modalBg" class="modal-bg" style="display:none">
+    <div class="modal-box">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <img id="modalImg" src="" alt="" />
+      <h3 id="modalName"></h3>
+      <div class="addrs" id="modalAddr"></div>
+      <div class="menus" id="modalMenus"></div>
+    </div>
+  </div>
+
+<script>
+  const WHITE_IMG = "https://via.placeholder.com/80x80/FFFFFF/FFFFFF?text=+";
+  const WHITEMENU_IMG = "https://via.placeholder.com/70x70/FFFFFF/FFFFFF?text=+";
+  function safeImg(str, fallback) { return str && str.length>10 ? str : fallback; }
+  function safeMenuImgs(arr) { return (Array.isArray(arr)&&arr.length&&arr[0].length>10) ? arr : [WHITEMENU_IMG]; }
+
+  const dishes = [
+    "비빔밥", "우동", "초밥", "닭한마리", "까르보나라", "스테이크", "짬뽕", "돈카츠", "아메리카노"
+  ];
+
+  // 식당 클릭수 집계용 객체
+  let restaurantClicks = {};
+
+  function appendRestaurants(list, desc, imgList, tagsList=[]) {
+    return list.map((name, idx) => {
+      restaurantClicks[name] = 0; // 클릭수 초기화
+      return {
+        name,
+        menu: desc[idx % desc.length],
+        addr: "-",
+        img: imgList && imgList[idx] ? imgList[idx] : WHITE_IMG,
+        menuimgs: [WHITEMENU_IMG],
+        tags: tagsList[idx] || []
+      };
+    });
+  }
+
+  const kunUniImgs = [
+    "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20171222_273%2F1513909993152wbpV8_JPEG%2FfM-4sk2LkYUe0jmd83plu51X.JPG.jpg",
+    "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221105_150%2F1667640635518fdmMX_JPEG%2F01_%BE%D7%BC%C7%C4%C6-6.jpg",
+    "", "", "",
+    "", "", "", "", "",
+    "", "", "", "", "",
+    "", "", "", "", ""
+  ];
+
+  const data = {
+    "건대입구": appendRestaurants([
+      "송화산시도삭면", "정면 건대", "모츠커피 건대", "하이디라오 건대점", "우마이도 건대점",
+      "미분당 건대", "계탄집", "핵밥 건대점", "백소정 건대본점", "고베규카츠 건대본점",
+      "성수완당 본점", "오유미당 건대점", "화기애애 본점", "고흥순대국", "민정식당",
+      "돕감자탕 전문점", "아찌떡볶이", "함흥본가면옥 건대점", "동해해물", "더 클래식 500 라구뜨"
+    ], dishes, kunUniImgs, [
+      ["vegan"], [], ["vegan", "under10k"], [], [],
+      ["glutenfree"], [], ["vegan", "under10k"], [], [],
+      ["halal"], [], [], [], ["under10k"],
+      [], [], [], [], []
+    ]),
+    "중문": appendRestaurants([
+      "두찜 건대점", "정면 국수", "내가찜한닭 건국대점", "현이네 고기국수", "제주곤이칼국수 건대점",
+      "쭈꾸미킹 건대점", "어멍네고기국수", "행컵 건국대점", "장인닭갈비 건대점", "춘천집 명가 닭갈비",
+      "종로빈대떡 신사업9호점", "팔각도 건대점", "건국대 학식(학생회관)", "불막열삼 건대점", "이화",
+      "건대 숯불부자곱창", "강승호생면", "홍춘천치즈닭갈비", "마라공방", "더벤티 건대중문점"
+    ], dishes, [], []),
+    "후문": appendRestaurants([
+      "시홍쓰 건대", "새로이 건대", "래빗홀 버거컴퍼니 건대", "알촌 건국대점", "도도삼겹",
+      "몽글몽글 두부요리", "부대사랑", "위락밥집", "동궁찜닭 건대광진점", "통큰감자탕 건대본점",
+      "놀부부대찌개 건대스타시티점", "헬로우낙곱새군자점", "오마카세 오사이초밥 건대본점", "미도인 건대", "코후쿠 이자카야",
+      "가츠시", "누들아한타이", "도쿄420", "건대사시미", "왕십리정곱창 어린이대공원역"
+    ], dishes, [], []),
+    "어린이대공원": appendRestaurants([
+      "에이뿔램 군자점", "수퍼슬라이더스", "혼다라멘", "초라멘", "꾸아 건대점",
+      "오마카세 오사이초밥 건대본점", "멕시칼리", "이이요", "소바쿠", "빠오즈푸 본점",
+      "래빗홀 버거컴퍼니 건대", "브네 어린이대공원역", "왕소구이 건대", "재희네식당 건대", "내담 세종대점",
+      "한솥도시락 건대", "마초쉐프 건대점", "미도인 건대", "옥루몽 어린이대공원점", "몽디저트"
+    ], dishes, [], []),
+  };
+
+  let currentCategory = "건대입구";
+  let currentDietTags = [];
+
+  // 위치 필터 버튼 이벤트
+  const locationButtons = document.querySelectorAll('#categoryBar button');
+  locationButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      locationButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCategory = btn.dataset.cat;
+      renderRestaurants(currentCategory, currentDietTags);
+    });
+  });
+
+  // 식단 필터 버튼 이벤트 (토글)
+  const dietButtons = document.querySelectorAll('.filter-tags-center button');
+  dietButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag;
+      const idx = currentDietTags.indexOf(tag);
+      if (idx > -1) {
+        currentDietTags.splice(idx, 1);
+        btn.classList.remove('active');
+      } else {
+        currentDietTags.push(tag);
+        btn.classList.add('active');
+      }
+      renderRestaurants(currentCategory, currentDietTags);
+    });
+  });
+
+  // 필터 적용해서 리스트 반환
+  function filterRestaurants(loc, dietTags) {
+    let list = data[loc] || [];
+    if (dietTags.length === 0) return list;
+    return list.filter(r => dietTags.every(tag => r.tags.includes(tag)));
+  }
+
+  // 클릭수 집계용 객체는 이미 생성됨
+
+  // 랭킹 업데이트 함수
+  function updateRanking() {
+    const rankingArr = Object.entries(restaurantClicks)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
+    const rankingList = document.getElementById('rankingList');
+    rankingList.innerHTML = "";
+    rankingArr.forEach(([name, count]) => {
+      const li = document.createElement('li');
+      li.textContent = `${name} (${count}회)`;
+      rankingList.appendChild(li);
+    });
+  }
+
+  // 식당 목록 그리기
+  function renderRestaurants(category, dietTags) {
+    const container = document.getElementById('restaurantList');
+    container.innerHTML = "";
+    const list = filterRestaurants(category, dietTags);
+
+    if (!list.length) {
+      container.innerHTML = "<p>해당 조건에 맞는 식당이 없습니다.</p>";
+      return;
+    }
+    const ul = document.createElement('ul');
+    ul.className = "restaurants";
+
+    list.forEach(d => {
+      const li = document.createElement('li');
+      li.className = "restaurant-item";
+      li.innerHTML = `
+        <img class="thumb" src="${safeImg(d.img, WHITE_IMG)}" alt="${d.name}">
+        <div class="info-block">
+          <div class="restaurant-name">${d.name}</div>
+          <div class="dish-name">${(d.menu || '').split(',')[0]}</div>
+        </div>
+        <img class="dish-thumb" src="${safeMenuImgs(d.menuimgs)}" alt="대표 메뉴 사진">
+      `;
+      li.onclick = () => {
+        restaurantClicks[d.name]++;
+        updateRanking();
+        showModal(d);
+      };
+      ul.appendChild(li);
+    });
+
+    container.appendChild(ul);
+  }
+
+  // 모달 열기
+  function showModal(d) {
+    document.getElementById('modalImg').src = safeImg(d.img, WHITE_IMG);
+    document.getElementById('modalName').innerText = d.name;
+    document.getElementById('modalAddr').innerHTML = "주소: " + (d.addr || "정보 없음");
+    document.getElementById('modalMenus').innerHTML = "대표메뉴: " + d.menu;
+    document.getElementById('modalBg').style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById('modalBg').style.display = "none";
+  }
+
+  document.getElementById('modalBg').onclick = function (e) {
+    if (e.target === this) closeModal();
+  };
+
+  renderRestaurants(currentCategory, currentDietTags);
+  updateRanking();
+</script>
+</body>
+</html>
