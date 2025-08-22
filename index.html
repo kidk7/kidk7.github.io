@@ -123,6 +123,11 @@
     #contentWrapper {
       flex-grow: 1;
       max-width: 720px;
+      background: #fffde8;
+      padding: 25px 22px;
+      border-radius: 12px;
+      box-shadow: 0 2px 13px rgba(255,215,57,0.13);
+      min-height: 300px;
     }
 
     #noticeBox {
@@ -199,14 +204,6 @@
       background: #ffe998; color: #d5ad00; outline: 2px solid #ffe065;
     }
 
-    #restaurantList {
-      background: #fffde8;
-      padding: 25px 22px;
-      border-radius: 12px;
-      box-shadow: 0 2px 13px rgba(255,215,57,0.13);
-      max-width: 100%;
-    }
-
     ul.restaurants { list-style: none; padding: 0; margin: 0; }
     .restaurant-item {
       display: flex; align-items: flex-start; gap: 18px;
@@ -226,34 +223,20 @@
     }
     .thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 10px; }
 
-    .modal-bg {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background:rgba(60,50,10,0.24);
-      display: none; align-items: center; justify-content: center; z-index: 1001;
+    #backBtn {
+      margin-bottom: 20px; 
+      padding: 6px 12px; 
+      font-weight: 700; 
+      cursor: pointer;
+      background: #ffda3c;
+      border: none;
+      border-radius: 6px;
+      color: #4e3900;
+      box-shadow: 0 2px 6px rgba(255,218,60,0.7);
+      transition: background 0.3s ease;
     }
-    .modal-box {
-      background: #fffde8; min-width: 320px; max-width: 92vw; padding: 28px 34px 19px 34px;
-      border-radius:16px; box-shadow: 0 10px 32px rgba(80,60,0,0.19);
-      position: relative; display: flex; flex-direction: column; align-items: center; text-align: center;
-    }
-    .modal-box h3 {
-      margin: 6px 0 11px 0; font-size: 1.34em; color: #be9003;
-    }
-    .modal-box img {
-      width: 110px; height: 110px; object-fit: cover; border-radius: 13px; margin-bottom: 20px;
-    }
-    .modal-box .addrs {
-      font-size: 1.04em; color: #666500; margin: 3px 0 7px 0;
-    }
-    .modal-box .menus {
-      font-weight: 600; margin-top: 10px; font-size: 1.07em;
-    }
-    .modal-box .clickCount {
-      margin-top: 8px; font-size: 0.95em; color: #855900;
-    }
-    .close-btn {
-      position: absolute; top: 7px; right: 15px; background: #ffd700; border: none;
-      color: #874c00; font-size: 1.5em; cursor: pointer; border-radius: 50%; width: 33px; height: 33px;
-      font-weight: bold;
+    #backBtn:hover {
+      background: #ffd700;
     }
   </style>
 </head>
@@ -310,17 +293,6 @@
         <li>신규 식당 등록 안내</li>
       </ul>
     </aside>
-  </div>
-
-  <div id="modalBg" class="modal-bg">
-    <div class="modal-box">
-      <button class="close-btn" onclick="closeModal()">&times;</button>
-      <img id="modalImg" src="" alt="식당 이미지" />
-      <h3 id="modalName"></h3>
-      <div class="addrs" id="modalAddr"></div>
-      <div class="menus" id="modalMenus"></div>
-      <div class="clickCount" id="modalClicks"></div>
-    </div>
   </div>
 
 <script>
@@ -388,6 +360,8 @@
       document.querySelectorAll('#categoryBar button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentCategory = btn.dataset.cat;
+      currentDietTags = [];
+      document.querySelectorAll('#dietBar button').forEach(b => b.classList.remove('active'));
       renderRestaurants();
     });
   });
@@ -461,13 +435,64 @@
     });
   }
 
+  // 상세보기 (SPA 방식)
+  function openDetailView(r) {
+    const container = document.getElementById('contentWrapper');
+    container.innerHTML = `
+      <button id="backBtn">← 뒤로가기</button>
+      <h2>${r.name}</h2>
+      <p><strong>주소:</strong> ${r.addr}</p>
+      <p><strong>대표 메뉴:</strong> ${r.menu}</p>
+      <p><strong>종류:</strong> ${r.type}</p>
+      <p><strong>태그:</strong> ${r.tags.length ? r.tags.join(', ') : '없음'}</p>
+    `;
+
+    document.getElementById('backBtn').addEventListener('click', () => {
+      renderRestaurants();
+    });
+  }
+
   function renderRestaurants() {
-    const container = document.getElementById('restaurantList');
-    container.innerHTML = "";
+    const container = document.getElementById('contentWrapper');
+    // 필터 박스 포함해서 렌더링하려면 별도 처리 필요하지만 여기선 목록만 교체
+
+    // 필터 UI는 그대로 두고 목록만 렌더링하려면 필터 부분을 따로 분리하는 게 좋음
+    // 여기선 filter-wrapper 포함된 전체 영역 유지 위해 일부 DOM 분리 가능하지만 간단히 목록만 대상.
+
+    const existingFilterWrapper = container.querySelector('.filter-wrapper');
+    if(!existingFilterWrapper){
+      container.innerHTML = `
+        <div class="filter-wrapper">
+          <div class="filter-group">
+            <div class="filter-title">위치</div>
+            <div class="filter-bar" id="categoryBar">
+              <button class="${currentCategory === '건대입구' ? 'active':''}" data-cat="건대입구">건대입구</button>
+              <button class="${currentCategory === '중문' ? 'active':''}" data-cat="중문">중문</button>
+              <button class="${currentCategory === '후문' ? 'active':''}" data-cat="후문">후문</button>
+              <button class="${currentCategory === '어린이대공원' ? 'active':''}" data-cat="어린이대공원">어린이대공원</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title">선택</div>
+            <div class="filter-bar" id="dietBar">
+              <button class="${currentDietTags.includes('vegan') ? 'active':''}" data-tag="vegan">비건</button>
+              <button class="${currentDietTags.includes('halal') ? 'active':''}" data-tag="halal">할랄</button>
+              <button class="${currentDietTags.includes('glutenfree') ? 'active':''}" data-tag="glutenfree">글루텐프리</button>
+              <button class="${currentDietTags.includes('under10k') ? 'active':''}" data-tag="under10k">만원이하</button>
+            </div>
+          </div>
+        </div>
+        <section id="restaurantList"></section>
+      `;
+      addFilterEventHandlers();
+    }
+
     const list = filterRestaurants();
+    const listContainer = container.querySelector('#restaurantList');
+    listContainer.innerHTML = "";
 
     if(!list.length){
-      container.innerHTML = "<p>조건에 맞는 식당이 없습니다.</p>";
+      listContainer.innerHTML = "<p>조건에 맞는 식당이 없습니다.</p>";
       return;
     }
 
@@ -488,31 +513,43 @@
       `;
       li.onclick = () => {
         increaseClick(r.name);
-        openModal(r);
+        openDetailView(r);
       };
       ul.appendChild(li);
     });
 
-    container.appendChild(ul);
+    listContainer.appendChild(ul);
   }
 
-  function openModal(r) {
-    document.getElementById('modalImg').src = r.img || WHITE_IMG;
-    document.getElementById('modalName').textContent = r.name;
-    document.getElementById('modalAddr').textContent = "주소: " + (r.addr || "정보 없음");
-    document.getElementById('modalMenus').textContent = "대표메뉴: " + (r.menu || "정보 없음");
-    document.getElementById('modalClicks').textContent = "조회수: " + (restaurantClicks[r.name] || 0) + "회";
-    document.getElementById('modalBg').style.display = 'flex';
+  // 필터 버튼 이벤트 재설정 (목록 재랜더링 시 이벤트 유지용)
+  function addFilterEventHandlers(){
+    document.querySelectorAll('#categoryBar button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#categoryBar button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.dataset.cat;
+        currentDietTags = [];
+        document.querySelectorAll('#dietBar button').forEach(b => b.classList.remove('active'));
+        renderRestaurants();
+      });
+    });
+
+    document.querySelectorAll('#dietBar button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tag = btn.dataset.tag;
+        if(currentDietTags.includes(tag)){
+          currentDietTags = currentDietTags.filter(t => t !== tag);
+          btn.classList.remove('active');
+        } else {
+          currentDietTags.push(tag);
+          btn.classList.add('active');
+        }
+        renderRestaurants();
+      });
+    });
   }
 
-  function closeModal() {
-    document.getElementById('modalBg').style.display = 'none';
-  }
-
-  document.getElementById('modalBg').onclick = function(e) {
-    if(e.target === this) closeModal();
-  };
-
+  // 최초 렌더링
   renderRestaurants();
   updateRanking();
 </script>
