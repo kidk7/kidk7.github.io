@@ -1,1 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<title>yum.chive</title>
+<style>
+  body { font-family:'Arial',sans-serif; margin:0; background:#fffbe7; color:#4e3900; }
+  header { background:#ffda3c; color:#4e3900; border-bottom:3px solid #ecc700;
+    box-shadow:0 2px 8px rgba(255,218,60,0.15); padding:32px 0 24px; position:fixed;
+    top:0; left:0; width:100%; z-index:1000; display:flex; justify-content:center; align-items:center;}
+  #siteName { font-weight:800;font-size:2em;border:3.5px solid #e7be17;
+    border-radius:18px;padding:14px 40px;background:#fffde8; }
+  .header-right{position:absolute;right:5vw;top:32px;display:flex;gap:10px;}
+  .header-link{color:#ad8e01;font-weight:650;text-decoration:none;}
 
+  /* --- 핵심 : 전체 wrapper를 더 크게 내림(헤더+100px 이상) --- */
+  #mainWrapper {
+    display: flex; max-width:1080px; margin:0 auto; gap:28px; 
+    align-items: flex-start;
+    margin-top: 180px; /* header 높이(=약80-85px)+95~100px */
+  }
+  #sideBar {
+    display:flex; flex-direction:column; gap:28px; min-width:220px; width:220px;
+  }
+  #communityBox,#rankingBox,#noticeBox {
+    background:#fffbe7; border:2px solid #e7be17;
+    border-radius:12px; padding:16px;
+    box-shadow:0 2px 14px rgba(255,220,70,0.14);
+  }
+
+  #communityBox h4{margin:4px 0;font-size:1rem;text-align:center;color:#ad8e01;}
+  #communityBox ul{list-style:none; padding-left:0; margin:8px 0 0;}
+  #communityBox li{cursor:pointer;padding:4px 0;font-size:0.97rem;}
+  #communityBox li:hover{text-decoration:underline;}
+
+  #rankingBox h4{margin:0 0 8px;text-align:center;color:#ad8e01;}
+  #rankingList{list-style:none;padding:0;margin:0;}
+  #rankingList li{display:flex;justify-content:space-between;align-items:center;
+    padding:6px 4px;border-bottom:1px solid #eee6bb;cursor:pointer;}
+  #rankingList li:hover{background:#fff3c0;}
+  .rank-left{display:flex;align-items:center;gap:8px;}
+  .rank-right{color:#856300;font-size:0.85rem;}
+  .medal{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+    border-radius:50%;color:#fff;font-weight:bold;font-size:0.95rem;}
+  .gold{background:#f5c940;} .silver{background:#c0c0c0;} .bronze{background:#cd7f32;}
+  .rank-number{color:#856300;font-weight:600;width:22px;text-align:center;}
+
+  #contentWrapper{flex:1; min-width:380px; background:#fffde8;padding:20px;border-radius:12px;
+    box-shadow:0 2px 13px rgba(255,215,57,0.13);}
+  .filter-wrapper{border:2px solid #e7be17;border-radius:12px;padding:16px;margin-bottom:20px;background:#fffbe7;}
+  .filter-group{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
+  .filter-bar{display:flex;gap:18px;flex-wrap:wrap;}
+  .filter-bar button{padding:8px 16px;border:none;border-radius:6px;background:#ffe065;cursor:pointer;font-weight:600;}
+  .filter-bar button.active{background:#ffe998;color:#d5ad00;}
+
+  ul.restaurants{list-style:none;padding:0;}
+  .restaurant-item{display:flex;gap:12px;border-bottom:1px solid #fee975;padding:12px 0;cursor:pointer;}
+  .thumb{width:80px;height:80px;object-fit:cover;border-radius:8px;}
+  #backBtn{margin-bottom:12px;padding:8px 14px;border:none;border-radius:6px;background:#ffda3c;cursor:pointer;}
+
+  #noticeBox{width:220px;}
+  #noticeBox h4{margin:0 0 16px; text-align:center; color:#ad8e01;}
+  #noticeList{list-style:none;padding-left:0;margin:0;}
+  #noticeList li{cursor:pointer;margin-bottom:14px; line-height:1.5;}
+  #noticeList li:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<header>
+  <span id="siteName">yum.chive</span>
+  <div class="header-right"><a href="#" class="header-link">로그인</a><a href="#" class="header-link">고객센터</a></div>
+</header>
+
+<div id="mainWrapper">
+  <!-- 좌측: 커뮤니티+랭킹 -->
+  <div id="sideBar">
+    <div id="communityBox">
+      <h4>🌟 커뮤니티</h4>
+      <ul>
+        <li data-detail="학생들이 추천하는 건대 저렴 맛집 모음!">✨ 건대 저렴 맛집 모음</li>
+        <li data-detail="비건 식단 가능한 식당 정리">🥦 비건 식당 리스트</li>
+        <li data-detail="가성비 최고 점심 메뉴 추천글">🍱 가성비 점심 Top 5</li>
+      </ul>
+    </div>
+    <div id="rankingBox"><h4>🍽️ 인기 랭킹</h4><ol id="rankingList"></ol></div>
+  </div>
+
+  <!-- 중앙: 필터 + 식당 목록 -->
+  <div id="contentWrapper">
+    <div class="filter-wrapper">
+      <div class="filter-group">
+        <div class="filter-title">위치</div>
+        <div class="filter-bar" id="categoryBar">
+          <button class="active" data-cat="건대입구">건대입구</button>
+          <button data-cat="중문">중문</button>
+          <button data-cat="후문">후문</button>
+          <button data-cat="어린이대공원">어린이대공원</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-title">선택</div>
+        <div class="filter-bar" id="dietBar">
+          <button data-tag="vegan">비건</button>
+          <button data-tag="halal">할랄</button>
+          <button data-tag="glutenfree">글루텐프리</button>
+          <button data-tag="under10k">만원이하</button>
+        </div>
+      </div>
+    </div>
+    <section id="restaurantList"></section>
+  </div>
+
+  <!-- 우측: 공지사항 -->
+  <aside id="noticeBox">
+    <h4>📢 공지사항</h4>
+    <ul id="noticeList">
+      <li data-detail="맛집 추천 이벤트 진행 중입니다.">맛집 추천 받아요!</li>
+      <li data-detail="이번 주 일부 식당 20% 할인 중!">이번 주 할인 이벤트 진행중</li>
+      <li data-detail="신규 식당 등록 안내입니다.">신규 식당 등록 안내</li>
+    </ul>
+  </aside>
+</div>
+
+<script>
+const WHITE_IMG="https://via.placeholder.com/80x80/FFFFFF/FFFFFF?text=+";
+const data={
+"건대입구":[
+{name:"송화산시도삭면",menu:"비빔밥",addr:"서울 광진구 화양동 123-10",type:"한식",img:WHITE_IMG,tags:["vegan"]},
+{name:"정면 건대",menu:"우동",addr:"서울 광진구 자양동 456-5",type:"일식",img:WHITE_IMG,tags:[]},
+{name:"모츠커피 건대",menu:"초밥",addr:"서울 광진구 화양동 78-3",type:"일식·카페",img:WHITE_IMG,tags:["vegan","under10k"]},
+{name:"하이디라오 건대점",menu:"닭한마리",addr:"서울 광진구 자양동 9-7",type:"중식",img:WHITE_IMG,tags:["halal"]},
+{name:"우마이도 건대점",menu:"까르보나라",addr:"서울 광진구 군자역로 6-8",type:"양식",img:WHITE_IMG,tags:[]},
+{name:"미분당 건대",menu:"스테이크",addr:"서울 광진구 능동로 20-11",type:"양식",img:WHITE_IMG,tags:["glutenfree"]},
+{name:"계탄집",menu:"짬뽕",addr:"서울 광진구 어린이대공원로 11-4",type:"중식",img:WHITE_IMG,tags:[]},
+{name:"핵밥 건대점",menu:"돈카츠",addr:"서울 광진구 건국대로 15-2",type:"일식",img:WHITE_IMG,tags:["vegan","under10k"]},
+{name:"백소정 건대본점",menu:"아메리카노",addr:"서울 광진구 자양로 12-1",type:"카페",img:WHITE_IMG,tags:[]},
+{name:"고베규카츠 건대본점",menu:"비빔밥",addr:"서울 광진구 자양로 122-6",type:"한식",img:WHITE_IMG,tags:[]},
+{name:"성수완당 본점",menu:"스테이크",addr:"서울 광진구 성수동 1가 23-17",type:"양식",img:WHITE_IMG,tags:["halal"]},
+{name:"오유미당 건대점",menu:"초밥",addr:"서울 광진구 군자역로 33-4",type:"일식",img:WHITE_IMG,tags:[]},
+{name:"화기애애 본점",menu:"돈카츠",addr:"서울 광진구 건대입구 3가 13-9",type:"일식",img:WHITE_IMG,tags:[]},
+{name:"고흥순대국",menu:"짬뽕",addr:"서울 광진구 자양동 101-22",type:"중식",img:WHITE_IMG,tags:[]},
+{name:"민정식당",menu:"비빔밥",addr:"서울 광진구 화양동 5-2",type:"한식",img:WHITE_IMG,tags:["under10k"]},
+{name:"돕감자탕 전문점",menu:"닭한마리",addr:"서울 광진구 자양동 55-3",type:"한식",img:WHITE_IMG,tags:[]},
+{name:"아찌떡볶이",menu:"돈카츠",addr:"서울 광진구 어린이대공원로 9-5",type:"분식",img:WHITE_IMG,tags:[]},
+{name:"함흥본가면옥 건대점",menu:"아메리카노",addr:"서울 광진구 군자역로 7-10",type:"카페",img:WHITE_IMG,tags:[]},
+{name:"동해해물",menu:"비빔밥",addr:"서울 광진구 광진구청 2-11",type:"한식",img:WHITE_IMG,tags:[]},
+{name:"더 클래식 500 라구뜨",menu:"스테이크",addr:"서울 광진구 화양동 2-14",type:"양식",img:WHITE_IMG,tags:[]}
+],
+"중문":[
+{name:"두찜 건대점",menu:"찜닭",addr:"서울 광진구 중곡동 12-3",type:"한식",img:WHITE_IMG,tags:[]},
+{name:"정면 국수",menu:"국수",addr:"서울 광진구 중곡동 8-9",type:"한식",img:WHITE_IMG,tags:[]},
+{name:"내가찜한닭 건국대점",menu:"닭갈비",addr:"서울 광진구 군자동 14-1",type:"한식",img:WHITE_IMG,tags:[]}
+],
+"후문":[
+{name:"시홍쓰 건대",menu:"볶음밥",addr:"서울 광진구 후문로 112-5",type:"중식",img:WHITE_IMG,tags:[]},
+{name:"새로이 건대",menu:"버거",addr:"서울 광진구 후문로 130-2",type:"버거류",img:WHITE_IMG,tags:[]},
+{name:"래빗홀 버거컴퍼니 건대",menu:"핸드메이드 버거",addr:"서울 광진구 후문길 18-7",type:"버거류",img:WHITE_IMG,tags:["under10k"]}
+],
+"어린이대공원":[
+{name:"에이뿔램 군자점",menu:"양고기구이",addr:"서울 광진구 군자동 50-1",type:"양식",img:WHITE_IMG,tags:[]},
+{name:"수퍼슬라이더스",menu:"버거",addr:"서울 광진구 어린이대공원로 15-6",type:"버거류",img:WHITE_IMG,tags:["under10k"]},
+{name:"혼다라멘",menu:"라멘",addr:"서울 광진구 자양동 20-4",type:"일식",img:WHITE_IMG,tags:[]},
+{name:"초라멘",menu:"라멘",addr:"서울 광진구 어린이대공원로 22-8",type:"일식",img:WHITE_IMG,tags:["glutenfree"]},
+{name:"꾸아 건대점",menu:"베트남 쌀국수",addr:"서울 광진구 광진로 88-9",type:"아시아식",img:WHITE_IMG,tags:["vegan"]},
+{name:"오마카세 오사이초밥 건대본점",menu:"초밥",addr:"서울 광진구 군자역로 77-12",type:"일식",img:WHITE_IMG,tags:[]}
+]
+};
+
+let restaurantClicks=JSON.parse(localStorage.getItem('restaurantClicks')||'{}');
+let currentCategory="건대입구", currentDietTags=[];
+function filterRestaurants(){let list=data[currentCategory]||[]; if(currentDietTags.length) list=list.filter(r=>currentDietTags.every(tag=>r.tags.includes(tag))); return list;}
+function increaseClick(name){restaurantClicks[name]=(restaurantClicks[name]||0)+1; localStorage.setItem('restaurantClicks',JSON.stringify(restaurantClicks)); updateRanking();}
+function updateRanking(){
+  const rl=document.getElementById('rankingList'); rl.innerHTML="";
+  Object.entries(restaurantClicks).sort((a,b)=>b[1]-a[1]).slice(0,10).forEach(([name,count],i)=>{
+    const li=document.createElement('li'); const left=document.createElement('div'); left.className="rank-left";
+    if(i===0) left.innerHTML=`<span class="medal gold">1</span><span>${name}</span>`;
+    else if(i===1) left.innerHTML=`<span class="medal silver">2</span><span>${name}</span>`;
+    else if(i===2) left.innerHTML=`<span class="medal bronze">3</span><span>${name}</span>`;
+    else left.innerHTML=`<span class="rank-number">${i+1}</span><span>${name}</span>`;
+    const right=document.createElement('div'); right.className="rank-right"; right.textContent=`${count}회`;
+    li.append(left,right);
+    li.onclick=()=>{const restaurant=Object.values(data).flat().find(r=>r.name===name); if(restaurant) openDetailView(restaurant);};
+    rl.appendChild(li);
+  });
+}
+function openDetailView(r){
+  const cont=document.getElementById('contentWrapper');
+  cont.innerHTML=`<button id="backBtn">← 뒤로가기</button><h2>${r.name}</h2>
+  <p><b>주소:</b> ${r.addr}</p><p><b>대표 메뉴:</b> ${r.menu}</p>
+  <p><b>종류:</b> ${r.type}</p><p><b>태그:</b> ${r.tags.length?r.tags.join(", "):"없음"}</p>`;
+  document.getElementById('backBtn').onclick=renderRestaurants;
+}
+function renderRestaurants(){
+  const cont=document.getElementById('contentWrapper');
+  cont.innerHTML=`<div class="filter-wrapper">
+    <div class="filter-group"><div class="filter-title">위치</div>
+      <div class="filter-bar" id="categoryBar">${["건대입구","중문","후문","어린이대공원"].map(cat=>
+        `<button ${currentCategory===cat?'class="active"':''} data-cat="${cat}">${cat}</button>`).join("")}</div></div>
+    <div class="filter-group"><div class="filter-title">선택</div>
+      <div class="filter-bar" id="dietBar">
+        <button data-tag="vegan">비건</button><button data-tag="halal">할랄</button>
+        <button data-tag="glutenfree">글루텐프리</button><button data-tag="under10k">만원이하</button>
+      </div></div></div><section id="restaurantList"></section>`;
+  document.querySelectorAll('#categoryBar button').forEach(btn=>{btn.onclick=()=>{document.querySelectorAll('#categoryBar button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); currentCategory=btn.dataset.cat; currentDietTags=[]; renderRestaurants();}});
+  document.querySelectorAll('#dietBar button').forEach(btn=>{btn.onclick=()=>{const t=btn.dataset.tag; if(currentDietTags.includes(t)){currentDietTags=currentDietTags.filter(x=>x!==t);} else currentDietTags.push(t); renderRestaurants();}});
+  const list=filterRestaurants(); const lc=cont.querySelector('#restaurantList'); lc.innerHTML="";
+  if(!list.length){lc.innerHTML="<p>조건에 맞는 식당 없음</p>"; return;}
+  const ul=document.createElement('ul'); ul.className="restaurants";
+  list.forEach(r=>{const li=document.createElement('li'); li.className="restaurant-item"; li.innerHTML=`<img src="${r.img||WHITE_IMG}" class="thumb"/><div><b>${r.name}</b><div>${r.addr}</div><div>${r.type} | ${r.menu}</div></div>`; li.onclick=()=>{increaseClick(r.name);openDetailView(r);}; ul.appendChild(li);}); lc.appendChild(ul);
+}
+document.querySelectorAll('#noticeList li, #communityBox li').forEach(li=>{
+  li.onclick=()=>{const detail=li.dataset.detail||li.textContent; const cont=document.getElementById('contentWrapper');
+    cont.innerHTML=`<button id="backBtn">← 뒤로가기</button><h2>${li.textContent}</h2><p>${detail}</p>`;
+    document.getElementById('backBtn').onclick=renderRestaurants;
+  };
+});
+renderRestaurants(); updateRanking();
+</script>
+</body>
+</html>
