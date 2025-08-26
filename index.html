@@ -4,75 +4,110 @@
 <meta charset="UTF-8"/>
 <title>yum.chive</title>
 <style>
-  body { font-family:'Arial',sans-serif; margin:0; background:#fffbe7; color:#4e3900; }
-  header { background:#ffda3c; color:#4e3900; border-bottom:3px solid #ecc700;
-    box-shadow:0 2px 8px rgba(255,218,60,0.15); padding:32px 0 24px; position:fixed;
-    top:0; left:0; width:100%; z-index:1000; display:flex; justify-content:center; align-items:center;}
-  #siteName { font-weight:800;font-size:2em;border:3.5px solid #e7be17;
-    border-radius:18px;padding:14px 40px;background:#fffde8; }
-  .header-right{position:absolute;right:5vw;top:32px;display:flex;gap:10px;}
-  .header-link{color:#ad8e01;font-weight:650;text-decoration:none;}
+  body{font-family:'Arial',sans-serif;margin:0;background:#fffbe7;color:#4e3900;}
+  header {
+    background:#ffda3c;color:#4e3900;border-bottom:3px solid #ecc700;
+    box-shadow:0 2px 8px rgba(255,218,60,0.15); padding:32px 0 24px;
+    position:fixed; top:0; left:0; width:100%; z-index:1000;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .header-content {
+    width: 100%;
+    max-width: 1440px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 40px;
+    position: relative;
+  }
+  #header-logos {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  #logo, #extra-img {
+    height: 45px;
+    width: 120px;
+    background: #fffde8;
+    border: 2.5px solid #e7be17;
+    border-radius: 9px;
+    object-fit: contain;
+    display: block;
+  }
+  #extra-img { background: #fffde8; }
 
-  /* --- 핵심 : 전체 wrapper를 더 크게 내림(헤더+100px 이상) --- */
-  #mainWrapper {
-    display: flex; max-width:1080px; margin:0 auto; gap:28px; 
-    align-items: flex-start;
-    margin-top: 180px; /* header 높이(=약80-85px)+95~100px */
+  #siteName {
+    font-weight:800; font-size:2em; border:3.5px solid #e7be17;
+    border-radius:18px; padding:14px 40px; background:#fffde8; cursor:pointer;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin:0;
+    white-space: nowrap;
   }
-  #sideBar {
-    display:flex; flex-direction:column; gap:28px; min-width:220px; width:220px;
-  }
-  #communityBox,#rankingBox,#noticeBox {
-    background:#fffbe7; border:2px solid #e7be17;
-    border-radius:12px; padding:16px;
-    box-shadow:0 2px 14px rgba(255,220,70,0.14);
-  }
-
-  #communityBox h4{margin:4px 0;font-size:1rem;text-align:center;color:#ad8e01;}
-  #communityBox ul{list-style:none; padding-left:0; margin:8px 0 0;}
+  .header-right {display:flex;gap:16px;align-items:center;position:static;}
+  .header-link {color:#ad8e01;font-weight:650;text-decoration:none;font-size:1rem;
+    padding:6px 12px;border-radius:6px;background:#fffde8;box-shadow:0 1px 3px rgba(0,0,0,0.1);cursor:pointer;}
+  /* 이하 기존 스타일은 그대로 */
+  #mainWrapper{display:flex;max-width:1400px;margin:0 auto;gap:32px;align-items:flex-start;margin-top:160px;padding:0 20px;}
+  #sideBar{display:flex;flex-direction:column;gap:28px;width:240px;}
+  #communityBox,#rankingBox,#noticeBox{background:#fffbe7;border:2px solid #e7be17;border-radius:12px;padding:18px;box-shadow:0 2px 14px rgba(255,220,70,0.14);}
+  #communityBox h4{text-align:center;color:#ad8e01;}
+  #communityBox ul{list-style:none;padding:0;margin:8px 0 0;}
   #communityBox li{cursor:pointer;padding:4px 0;font-size:0.97rem;}
   #communityBox li:hover{text-decoration:underline;}
-
-  #rankingBox h4{margin:0 0 8px;text-align:center;color:#ad8e01;}
-  #rankingList{list-style:none;padding:0;margin:0;}
-  #rankingList li{display:flex;justify-content:space-between;align-items:center;
-    padding:6px 4px;border-bottom:1px solid #eee6bb;cursor:pointer;}
+  #rankingBox h4{text-align:center;color:#ad8e01;}
+  #rankingList{list-style:none;margin:0;padding:0;}
+  #rankingList li{display:flex;justify-content:space-between;align-items:center;padding:6px 4px;border-bottom:1px solid #eee6bb;cursor:pointer;}
   #rankingList li:hover{background:#fff3c0;}
   .rank-left{display:flex;align-items:center;gap:8px;}
   .rank-right{color:#856300;font-size:0.85rem;}
-  .medal{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
-    border-radius:50%;color:#fff;font-weight:bold;font-size:0.95rem;}
+  .medal{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;color:#fff;font-weight:bold;}
   .gold{background:#f5c940;} .silver{background:#c0c0c0;} .bronze{background:#cd7f32;}
-  .rank-number{color:#856300;font-weight:600;width:22px;text-align:center;}
-
-  #contentWrapper{flex:1; min-width:380px; background:#fffde8;padding:20px;border-radius:12px;
-    box-shadow:0 2px 13px rgba(255,215,57,0.13);}
-  .filter-wrapper{border:2px solid #e7be17;border-radius:12px;padding:16px;margin-bottom:20px;background:#fffbe7;}
-  .filter-group{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
-  .filter-bar{display:flex;gap:18px;flex-wrap:wrap;}
-  .filter-bar button{padding:8px 16px;border:none;border-radius:6px;background:#ffe065;cursor:pointer;font-weight:600;}
+  .rank-number{width:22px;text-align:center;color:#856300;font-weight:600;}
+  #contentWrapper{flex:1;min-width:600px;max-width:850px;background:#fffde8;padding:28px;border-radius:12px;box-shadow:0 2px 13px rgba(255,215,57,0.13);}
+  .filter-wrapper{border:2px solid #e7be17;border-radius:12px;padding:22px 24px;margin-bottom:28px;background:#fffbe7;
+    display:flex;flex-direction:column;gap:16px;}
+  .filter-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+  .filter-top button{background:#ffe065;color:#856300;font-weight:600;padding:10px 20px;border:none;border-radius:6px;cursor:pointer;flex:none;}
+  #resetBtn{background:#cccccc;color:#4e3900;padding:10px 20px;}
+  .filter-group{display:flex;gap:16px;}
+  .filter-title{width:70px;font-weight:bold;color:#856300;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;}
+  .filter-bar{display:flex;gap:12px;flex:1;}
+  .filter-bar button{flex:1;padding:10px 16px;background:#ffe065;border:none;border-radius:6px;cursor:pointer;font-weight:600;white-space:nowrap;}
   .filter-bar button.active{background:#ffe998;color:#d5ad00;}
-
   ul.restaurants{list-style:none;padding:0;}
-  .restaurant-item{display:flex;gap:12px;border-bottom:1px solid #fee975;padding:12px 0;cursor:pointer;}
-  .thumb{width:80px;height:80px;object-fit:cover;border-radius:8px;}
+  .restaurant-item{display:flex;gap:16px;border-bottom:1px solid #fee975;padding:14px 0;cursor:pointer;}
+  .thumb{width:90px;height:90px;object-fit:cover;border-radius:8px;}
   #backBtn{margin-bottom:12px;padding:8px 14px;border:none;border-radius:6px;background:#ffda3c;cursor:pointer;}
-
-  #noticeBox{width:220px;}
-  #noticeBox h4{margin:0 0 16px; text-align:center; color:#ad8e01;}
+  #noticeBox{width:240px;}
+  #noticeBox h4{text-align:center;color:#ad8e01;}
   #noticeList{list-style:none;padding-left:0;margin:0;}
-  #noticeList li{cursor:pointer;margin-bottom:14px; line-height:1.5;}
+  #noticeList li{cursor:pointer;margin-bottom:14px;line-height:1.5;}
   #noticeList li:hover{text-decoration:underline;}
+  .detail-container{display:flex;gap:24px;margin-top:10px;}
+  .detail-left{flex:1;background:#fffbe7;padding:16px;border-radius:8px;border:1.8px solid #e7be17;}
+  .detail-right{flex:1;background:#fffef2;padding:16px;border-radius:8px;border:1.8px solid #e7be17;}
+  .detail-section{margin-top:24px;padding:18px;border-radius:8px;background:#fffbe7;border:1.8px solid #e7be17;}
+  .detail-left p,.detail-right p{margin:6px 0;}
 </style>
 </head>
 <body>
 <header>
-  <span id="siteName">yum.chive</span>
-  <div class="header-right"><a href="#" class="header-link">로그인</a><a href="#" class="header-link">고객센터</a></div>
+  <div class="header-content">
+    <div id="header-logos">
+      <img id="logo" src="https://www.konkuk.ac.kr/sites/konkuk/images/common/logo-top-color.png" alt="건국대학교 로고" />
+      <img id="extra-img" src="data:image/png;base64,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" alt="추가 이미지" />
+    </div>
+    <span id="siteName">yum.chive</span>
+    <div class="header-right">
+      <a href="#" class="header-link">로그인</a>
+      <a href="#" class="header-link">고객센터</a>
+    </div>
+  </div>
 </header>
 
 <div id="mainWrapper">
-  <!-- 좌측: 커뮤니티+랭킹 -->
   <div id="sideBar">
     <div id="communityBox">
       <h4>🌟 커뮤니티</h4>
@@ -84,33 +119,7 @@
     </div>
     <div id="rankingBox"><h4>🍽️ 인기 랭킹</h4><ol id="rankingList"></ol></div>
   </div>
-
-  <!-- 중앙: 필터 + 식당 목록 -->
-  <div id="contentWrapper">
-    <div class="filter-wrapper">
-      <div class="filter-group">
-        <div class="filter-title">위치</div>
-        <div class="filter-bar" id="categoryBar">
-          <button class="active" data-cat="건대입구">건대입구</button>
-          <button data-cat="중문">중문</button>
-          <button data-cat="후문">후문</button>
-          <button data-cat="어린이대공원">어린이대공원</button>
-        </div>
-      </div>
-      <div class="filter-group">
-        <div class="filter-title">선택</div>
-        <div class="filter-bar" id="dietBar">
-          <button data-tag="vegan">비건</button>
-          <button data-tag="halal">할랄</button>
-          <button data-tag="glutenfree">글루텐프리</button>
-          <button data-tag="under10k">만원이하</button>
-        </div>
-      </div>
-    </div>
-    <section id="restaurantList"></section>
-  </div>
-
-  <!-- 우측: 공지사항 -->
+  <div id="contentWrapper"></div>
   <aside id="noticeBox">
     <h4>📢 공지사항</h4>
     <ul id="noticeList">
@@ -123,27 +132,27 @@
 
 <script>
 const WHITE_IMG="https://via.placeholder.com/80x80/FFFFFF/FFFFFF?text=+";
+
 const data={
 "건대입구":[
-{name:"송화산시도삭면",menu:"비빔밥",addr:"서울 광진구 화양동 123-10",type:"한식",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20171222_273%2F1513909993152wbpV8_JPEG%2FfM-4sk2LkYUe0jmd83plu51X.JPG.jpghttps://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20171222_273%2F1513909993152wbpV8_JPEG%2FfM-4sk2LkYUe0jmd83plu51X.JPG.jpg",tags:["vegan"]},
-{name:"정면 건대",menu:"우동",addr:"서울 광진구 자양동 456-5",type:"일식",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221105_150%2F1667640635518fdmMX_JPEG%2F01_%25BE%25D7%25BC%25C7%25C4%25C6-6.jpg",tags:[]},
-{name:"모츠커피 건대",menu:"초밥",addr:"서울 광진구 화양동 78-3",type:"일식·카페",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20240910_185%2F1725956101822qU4L5_JPEG%2FKakaoTalk_Photo_2023-01-31-13-38-33.jpeg",tags:["vegan","under10k"]},
-{name:"하이디라오 건대점",menu:"닭한마리",addr:"서울 광진구 자양동 9-7",type:"중식",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fnaverbooking-phinf.pstatic.net%2F20231025_91%2F1698209935312gkRt7_JPEG%2F%25CB%25EF%25D3%25DE%25EF%25C1.jpg",tags:["halal"]},
-{name:"우마이도 건대점",menu:"까르보나라",addr:"서울 광진구 군자역로 6-8",type:"양식",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250508_188%2F1746671048632zEGis_PNG%2F1000058982.png",tags:[]},
-{name:"미분당 건대",menu:"스테이크",addr:"서울 광진구 능동로 20-11",type:"양식",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20240312_21%2F1710250327869PUFrG_JPEG%2FIMG_0124.jpeg",tags:["glutenfree"]},
-{name:"계탄집",menu:"짬뽕",addr:"서울 광진구 어린이대공원로 11-4",type:"중식",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fpup-review-phinf.pstatic.net%2FMjAyNTA4MDNfMzYg%2FMDAxNzU0MjA5MDM4NjA0.M4mcjiHfNMdzvEAFhXOhtlXiPz-2SY_-AauUA2QoVmog.fYpSqATonuj3KnXBLcliPTg1wKBsmJCmLpx8xgjR13Eg.JPEG%2F1000061462.jpg.jpg%3Ftype%3Dw1500_60_sharpen",tags:[]},
-{name:"핵밥 건대점",menu:"돈카츠",addr:"서울 광진구 건국대로 15-2",type:"일식",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250424_271%2F1745462663087VrIBz_JPEG%2F14.jpg",tags:["vegan","under10k"]},
-{name:"고베규카츠 건대본점",menu:"비빔밥",addr:"서울 광진구 자양로 122-6",type:"한식",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230329_272%2F1680084605093YCtTI_JPEG%2FKakaoTalk_20230329_174932601_04.jpg",tags:[]},
-{name:"성수완당 본점",menu:"스테이크",addr:"서울 광진구 성수동 1가 23-17",type:"양식",img:WHITE_IMG,tags:["halal"]},
-{name:"오유미당 건대점",menu:"초밥",addr:"서울 광진구 군자역로 33-4",type:"일식",img:WHITE_IMG,tags:[]},
-{name:"화기애애 본점",menu:"돈카츠",addr:"서울 광진구 건대입구 3가 13-9",type:"일식",img:WHITE_IMG,tags:[]},
-{name:"고흥순대국",menu:"짬뽕",addr:"서울 광진구 자양동 101-22",type:"중식",img:WHITE_IMG,tags:[]},
-{name:"민정식당",menu:"비빔밥",addr:"서울 광진구 화양동 5-2",type:"한식",img:WHITE_IMG,tags:["under10k"]},
-{name:"돕감자탕 전문점",menu:"닭한마리",addr:"서울 광진구 자양동 55-3",type:"한식",img:WHITE_IMG,tags:[]},
-{name:"아찌떡볶이",menu:"돈카츠",addr:"서울 광진구 어린이대공원로 9-5",type:"분식",img:WHITE_IMG,tags:[]},
-{name:"함흥본가면옥 건대점",menu:"아메리카노",addr:"서울 광진구 군자역로 7-10",type:"카페",img:WHITE_IMG,tags:[]},
-{name:"동해해물",menu:"비빔밥",addr:"서울 광진구 광진구청 2-11",type:"한식",img:WHITE_IMG,tags:[]},
-{name:"더 클래식 500 라구뜨",menu:"스테이크",addr:"서울 광진구 화양동 2-14",type:"양식",img:WHITE_IMG,tags:[]}
+{name:"송화산시도삭면",menu:"비빔밥",addr:"서울 광진구 화양동 123-10",type:"한식",
+img:"https://ldb-phinf.pstatic.net/20171222_273/1513909993152wbpV8_JPEG/fM-4sk2LkYUe0jmd83plu51X.JPG.jpg",tags:["vegan"]},
+{name:"정면 건대",menu:"우동",addr:"서울 광진구 자양동 456-5",type:"일식",
+img:"https://ldb-phinf.pstatic.net/20221105_150/1667640635518fdmMX_JPEG/01_%25BE%25D7%25BC%25C7%25C4%25C6-6.jpg",tags:[]},
+{name:"모츠커피 건대",menu:"초밥",addr:"서울 광진구 화양동 78-3",type:"일식·카페",
+img:"https://ldb-phinf.pstatic.net/20240910_185/1725956101822qU4L5_JPEG/KakaoTalk_Photo_2023-01-31-13-38-33.jpeg",tags:["vegan","under10k"]},
+{name:"하이디라오 건대점",menu:"닭한마리",addr:"서울 광진구 자양동 9-7",type:"중식",
+img:"https://naverbooking-phinf.pstatic.net/20231025_91/1698209935312gkRt7_JPEG/%25CB%25EF%25D3%25DE%25EF%25C1.jpg",tags:["halal"]},
+{name:"우마이도 건대점",menu:"까르보나라",addr:"서울 광진구 군자역로 6-8",type:"양식",
+img:"https://ldb-phinf.pstatic.net/20250508_188/1746671048632zEGis_PNG/1000058982.png",tags:[]},
+{name:"미분당 건대",menu:"스테이크",addr:"서울 광진구 능동로 20-11",type:"양식",
+img:"https://ldb-phinf.pstatic.net/20240312_21/1710250327869PUFrG_JPEG/IMG_0124.jpeg",tags:["glutenfree"]},
+{name:"계탄집",menu:"짬뽕",addr:"서울 광진구 어린이대공원로 11-4",type:"중식",
+img:"https://pup-review-phinf.pstatic.net/MjAyNTA4MDNfMzYg/MDAxNzU0MjA5MDM4NjA0.JPEG/1000061462.jpg",tags:[]},
+{name:"핵밥 건대점",menu:"돈카츠",addr:"서울 광진구 건국대로 15-2",type:"일식",
+img:"https://ldb-phinf.pstatic.net/20250424_271/1745462663087VrIBz_JPEG/14.jpg",tags:["vegan","under10k"]},
+{name:"고베규카츠 건대본점",menu:"비빔밥",addr:"서울 광진구 자양로 122-6",type:"한식",
+img:"https://ldb-phinf.pstatic.net/20230329_272/1680084605093YCtTI_JPEG/KakaoTalk_20230329_174932601_04.jpg",tags:[]}
 ],
 "중문":[
 {name:"두찜 건대점",menu:"찜닭",addr:"서울 광진구 중곡동 12-3",type:"한식",img:WHITE_IMG,tags:[]},
@@ -151,7 +160,8 @@ const data={
 {name:"내가찜한닭 건국대점",menu:"닭갈비",addr:"서울 광진구 군자동 14-1",type:"한식",img:WHITE_IMG,tags:[]}
 ],
 "후문":[
-{name:"시홍쓰 건대",menu:"볶음밥",addr:"서울 광진구 후문로 112-5",type:"중식",img:"https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220712_282%2F16576252274583ilfO_JPEG%2F2AA67F98-63C8-482B-A6B3-7E3DAD363062.jpeg",tags:[]},
+{name:"시홍쓰 건대",menu:"볶음밥",addr:"서울 광진구 후문로 112-5",type:"중식",
+img:"https://ldb-phinf.pstatic.net/20220712_282/16576252274583ilfO_JPEG/2AA67F98-63C8-482B-A6B3-7E3DAD363062.jpeg",tags:[]},
 {name:"새로이 건대",menu:"버거",addr:"서울 광진구 후문로 130-2",type:"버거류",img:WHITE_IMG,tags:[]},
 {name:"래빗홀 버거컴퍼니 건대",menu:"핸드메이드 버거",addr:"서울 광진구 후문길 18-7",type:"버거류",img:WHITE_IMG,tags:["under10k"]}
 ],
@@ -166,55 +176,150 @@ const data={
 };
 
 let restaurantClicks=JSON.parse(localStorage.getItem('restaurantClicks')||'{}');
-let currentCategory="건대입구", currentDietTags=[];
-function filterRestaurants(){let list=data[currentCategory]||[]; if(currentDietTags.length) list=list.filter(r=>currentDietTags.every(tag=>r.tags.includes(tag))); return list;}
-function increaseClick(name){restaurantClicks[name]=(restaurantClicks[name]||0)+1; localStorage.setItem('restaurantClicks',JSON.stringify(restaurantClicks)); updateRanking();}
+let currentCategory="전체", currentDietTags=[], currentPrice="";
+
+function filterRestaurants(){
+  let list=[];
+  if(currentCategory==="전체"){list=Object.values(data).flat();}
+  else{list=data[currentCategory]||[];}
+  if(currentDietTags.length) list=list.filter(r=>currentDietTags.every(tag=>r.tags.includes(tag)));
+  if(currentPrice){
+    list=list.filter(r=>{
+      if(currentPrice==="under7k") return r.tags.includes("under10k");
+      if(currentPrice==="under14k") return r.tags.includes("under10k");
+      if(currentPrice==="under20k") return r.tags.includes("under20k");
+      if(currentPrice==="over20k") return !r.tags.includes("under20k");
+      return true;
+    });
+  }
+  return list;
+}
+
+function increaseClick(name){
+  restaurantClicks[name]=(restaurantClicks[name]||0)+1;
+  localStorage.setItem('restaurantClicks',JSON.stringify(restaurantClicks));
+  updateRanking();
+}
 function updateRanking(){
-  const rl=document.getElementById('rankingList'); rl.innerHTML="";
+  const rl=document.getElementById('rankingList');rl.innerHTML="";
   Object.entries(restaurantClicks).sort((a,b)=>b[1]-a[1]).slice(0,10).forEach(([name,count],i)=>{
-    const li=document.createElement('li'); const left=document.createElement('div'); left.className="rank-left";
-    if(i===0) left.innerHTML=`<span class="medal gold">1</span><span>${name}</span>`;
-    else if(i===1) left.innerHTML=`<span class="medal silver">2</span><span>${name}</span>`;
-    else if(i===2) left.innerHTML=`<span class="medal bronze">3</span><span>${name}</span>`;
+    const li=document.createElement('li');const left=document.createElement('div');left.className="rank-left";
+    if(i===0)left.innerHTML=`<span class="medal gold">1</span><span>${name}</span>`;
+    else if(i===1)left.innerHTML=`<span class="medal silver">2</span><span>${name}</span>`;
+    else if(i===2)left.innerHTML=`<span class="medal bronze">3</span><span>${name}</span>`;
     else left.innerHTML=`<span class="rank-number">${i+1}</span><span>${name}</span>`;
-    const right=document.createElement('div'); right.className="rank-right"; right.textContent=`${count}회`;
+    const right=document.createElement('div');right.className="rank-right";right.textContent=`${count}회`;
     li.append(left,right);
-    li.onclick=()=>{const restaurant=Object.values(data).flat().find(r=>r.name===name); if(restaurant) openDetailView(restaurant);};
+    li.onclick=()=>{const restaurant=Object.values(data).flat().find(r=>r.name===name);if(restaurant)openDetailView(restaurant);};
     rl.appendChild(li);
   });
 }
 function openDetailView(r){
   const cont=document.getElementById('contentWrapper');
-  cont.innerHTML=`<button id="backBtn">← 뒤로가기</button><h2>${r.name}</h2>
-  <p><b>주소:</b> ${r.addr}</p><p><b>대표 메뉴:</b> ${r.menu}</p>
-  <p><b>종류:</b> ${r.type}</p><p><b>태그:</b> ${r.tags.length?r.tags.join(", "):"없음"}</p>`;
-  document.getElementById('backBtn').onclick=renderRestaurants;
+  cont.innerHTML=`
+    <button id="backBtn">← 뒤로가기</button>
+    <h2>${r.name}</h2>
+    <div class="detail-container">
+      <div class="detail-left">
+        <p><b>식당 소개:</b> ${r.name}의 대표 메뉴는 ${r.menu}이며, ${r.type} 전문점입니다.</p>
+        <p><b>위치:</b> ${r.addr}</p>
+        <p><b>운영시간:</b> 10:00 ~ 22:00 (예시)</p>
+        <p><b>키오스크 유무:</b> 있음</p>
+        <p><b>영어 메뉴판 유무:</b> 있음</p>
+        <p><b>태그:</b> ${r.tags.length ? r.tags.join(", ") : "없음"}</p>
+      </div>
+      <div class="detail-right">
+        <img src="${r.img || WHITE_IMG}" style="width:100%;max-height:250px;object-fit:cover;border-radius:8px;" />
+        <p><b>메뉴 정보:</b> ${r.menu}는 ${r.type} 카테고리 내 인기 메뉴입니다.</p>
+      </div>
+    </div>
+    <div class="detail-section">
+      <h3>📌 추가 정보</h3>
+      <p>주차 가능 / 단체석 보유 / 예약 가능 (예시)</p>
+    </div>
+    <div class="detail-section">
+      <h3>⭐ 리뷰</h3>
+      <p>- "정말 맛있어요!"</p>
+      <p>- "또 방문하고 싶어요!"</p>
+    </div>
+  `;
+  document.getElementById('backBtn').onclick = renderRestaurants;
 }
 function renderRestaurants(){
   const cont=document.getElementById('contentWrapper');
-  cont.innerHTML=`<div class="filter-wrapper">
-    <div class="filter-group"><div class="filter-title">위치</div>
-      <div class="filter-bar" id="categoryBar">${["건대입구","중문","후문","어린이대공원"].map(cat=>
-        `<button ${currentCategory===cat?'class="active"':''} data-cat="${cat}">${cat}</button>`).join("")}</div></div>
-    <div class="filter-group"><div class="filter-title">선택</div>
+  cont.innerHTML=`
+  <div class="filter-wrapper">
+    <div class="filter-top">
+      <button class="all-btn${currentCategory === "전체" ? ' active' : ''}" id="allBtn">전체</button>
+      <button id="resetBtn">초기화</button>
+    </div>
+    <div class="filter-group">
+      <div class="filter-title">위치</div>
+      <div class="filter-bar" id="categoryBar">
+        ${["건대입구","중문","후문","어린이대공원"].map(cat=>`<button class="${currentCategory===cat?'active':''}" data-cat="${cat}">${cat}</button>`).join("")}
+      </div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-title">기호</div>
       <div class="filter-bar" id="dietBar">
-        <button data-tag="vegan">비건</button><button data-tag="halal">할랄</button>
-        <button data-tag="glutenfree">글루텐프리</button><button data-tag="under10k">만원이하</button>
-      </div></div></div><section id="restaurantList"></section>`;
-  document.querySelectorAll('#categoryBar button').forEach(btn=>{btn.onclick=()=>{document.querySelectorAll('#categoryBar button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); currentCategory=btn.dataset.cat; currentDietTags=[]; renderRestaurants();}});
-  document.querySelectorAll('#dietBar button').forEach(btn=>{btn.onclick=()=>{const t=btn.dataset.tag; if(currentDietTags.includes(t)){currentDietTags=currentDietTags.filter(x=>x!==t);} else currentDietTags.push(t); renderRestaurants();}});
-  const list=filterRestaurants(); const lc=cont.querySelector('#restaurantList'); lc.innerHTML="";
-  if(!list.length){lc.innerHTML="<p>조건에 맞는 식당 없음</p>"; return;}
-  const ul=document.createElement('ul'); ul.className="restaurants";
-  list.forEach(r=>{const li=document.createElement('li'); li.className="restaurant-item"; li.innerHTML=`<img src="${r.img||WHITE_IMG}" class="thumb"/><div><b>${r.name}</b><div>${r.addr}</div><div>${r.type} | ${r.menu}</div></div>`; li.onclick=()=>{increaseClick(r.name);openDetailView(r);}; ul.appendChild(li);}); lc.appendChild(ul);
+        ${["vegan","halal","glutenfree","allergy"].map(tag=>`<button class="${currentDietTags.includes(tag)?'active':''}" data-tag="${tag}">${tag.charAt(0).toUpperCase()+tag.slice(1)}</button>`).join("")}
+      </div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-title">가격</div>
+      <div class="filter-bar" id="priceBar">
+        <button class="${currentPrice==="under7k" ? "active" : ""}" data-price="under7k">7000원 이하</button>
+        <button class="${currentPrice==="under14k" ? "active" : ""}" data-price="under14k">14000원 이하</button>
+        <button class="${currentPrice==="under20k" ? "active" : ""}" data-price="under20k">20000원 이하</button>
+        <button class="${currentPrice==="over20k" ? "active" : ""}" data-price="over20k">20000원 이상</button>
+      </div>
+    </div>
+  </div>
+  <section id="restaurantList"></section>
+  `;
+  document.getElementById("allBtn").onclick = () => {currentCategory = "전체"; currentDietTags = []; currentPrice = ""; renderRestaurants();};
+  document.getElementById("resetBtn").onclick = () => {currentCategory = "전체"; currentDietTags = []; currentPrice = ""; renderRestaurants();};
+  document.querySelectorAll("#categoryBar button").forEach(btn => {btn.onclick = () => {
+    document.querySelectorAll("#categoryBar button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active"); currentCategory = btn.dataset.cat; renderRestaurants();
+  };});
+  document.querySelectorAll("#dietBar button").forEach(btn => {btn.onclick = () => {
+    if(btn.classList.contains("active")){btn.classList.remove("active"); currentDietTags = [];}
+    else{document.querySelectorAll("#dietBar button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active"); currentDietTags = [btn.dataset.tag];}
+    renderRestaurants();
+  };});
+  document.querySelectorAll("#priceBar button").forEach(btn => {btn.onclick = () => {
+    if(btn.classList.contains("active")){btn.classList.remove("active"); currentPrice = "";}
+    else{document.querySelectorAll("#priceBar button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active"); currentPrice = btn.dataset.price;}
+    renderRestaurants();
+  };});
+  const list = filterRestaurants();
+  const lc = cont.querySelector("#restaurantList"); lc.innerHTML = "";
+  if(!list.length){lc.innerHTML = "<p>조건에 맞는 식당 없음</p>"; return;}
+  const ul=document.createElement("ul");ul.className = "restaurants";
+  list.forEach(r => {
+    const li=document.createElement("li"); li.className = "restaurant-item";
+    li.innerHTML = `<img src="${r.img||WHITE_IMG}" class="thumb"/><div><b>${r.name}</b><div>${r.addr}</div><div>${r.type} | ${r.menu}</div></div>`;
+    li.onclick = () => {increaseClick(r.name); openDetailView(r);};
+    ul.appendChild(li);
+  });
+  lc.appendChild(ul);
 }
-document.querySelectorAll('#noticeList li, #communityBox li').forEach(li=>{
-  li.onclick=()=>{const detail=li.dataset.detail||li.textContent; const cont=document.getElementById('contentWrapper');
-    cont.innerHTML=`<button id="backBtn">← 뒤로가기</button><h2>${li.textContent}</h2><p>${detail}</p>`;
-    document.getElementById('backBtn').onclick=renderRestaurants;
+document.querySelectorAll("#noticeList li, #communityBox li").forEach(li => {
+  li.onclick = () => {
+    const detail = li.dataset.detail || li.textContent;
+    const cont = document.getElementById("contentWrapper");
+    cont.innerHTML = `<button id="backBtn">← 뒤로가기</button><h2>${li.textContent}</h2><p>${detail}</p>`;
+    document.getElementById("backBtn").onclick = renderRestaurants;
   };
 });
-renderRestaurants(); updateRanking();
+document.getElementById("siteName").onclick = () => {
+  currentCategory = "전체"; currentDietTags = []; currentPrice = ""; renderRestaurants();
+};
+renderRestaurants();
+updateRanking();
 </script>
 </body>
 </html>
