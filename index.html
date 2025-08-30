@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <title>yum.chive</title>
@@ -35,7 +35,6 @@
     display: block;
   }
   #extra-img { background: #fffde8; }
-
   #siteName {
     font-weight:800; font-size:2em; border:3.5px solid #e7be17;
     border-radius:18px; padding:14px 40px; background:#fffde8; cursor:pointer;
@@ -48,7 +47,7 @@
   .header-right {display:flex;gap:16px;align-items:center;position:static;}
   .header-link {color:#ad8e01;font-weight:650;text-decoration:none;font-size:1rem;
     padding:6px 12px;border-radius:6px;background:#fffde8;box-shadow:0 1px 3px rgba(0,0,0,0.1);cursor:pointer;}
-  /* 이하 기존 스타일은 그대로 */
+  /* Styles carried over as is */
   #mainWrapper{display:flex;max-width:1400px;margin:0 auto;gap:32px;align-items:flex-start;margin-top:160px;padding:0 20px;}
   #sideBar{display:flex;flex-direction:column;gap:28px;width:240px;}
   #communityBox,#rankingBox,#noticeBox{background:#fffbe7;border:2px solid #e7be17;border-radius:12px;padding:18px;box-shadow:0 2px 14px rgba(255,220,70,0.14);}
@@ -96,91 +95,89 @@
 <header>
   <div class="header-content">
     <div id="header-logos">
-      <img id="logo" src="https://www.konkuk.ac.kr/sites/konkuk/images/common/logo-top-color.png" alt="건국대학교 로고" />
-      <img id="extra-img" src="data:image/png;base64,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" alt="추가 이미지" />
+      <img id="logo" src="https://www.konkuk.ac.kr/sites/konkuk/images/common/logo-top-color.png" alt="Konkuk University Logo" />
+      <img id="extra-img" src="data:image/png;base64,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" alt="Additional Image" />
     </div>
     <span id="siteName">yum.chive</span>
     <div class="header-right">
-      <a href="#" class="header-link">로그인</a>
-      <a href="#" class="header-link">고객센터</a>
+      <!-- Login element removed -->
+      <a href="#" class="header-link">Customer Service</a>
     </div>
   </div>
 </header>
-
 <div id="mainWrapper">
   <div id="sideBar">
     <div id="communityBox">
-      <h4>🌟 커뮤니티</h4>
+      <h4>🌟 Community</h4>
       <ul>
-        <li data-detail="학생들이 추천하는 건대 저렴 맛집 모음!">✨ 건대 저렴 맛집 모음</li>
-        <li data-detail="비건 식단 가능한 식당 정리">🥦 비건 식당 리스트</li>
-        <li data-detail="가성비 최고 점심 메뉴 추천글">🍱 가성비 점심 Top 5</li>
+        <li data-detail="Affordable restaurants recommended by Konkuk University students!">✨ Konkuk Affordable Restaurants</li>
+        <li data-detail="List of vegan-friendly restaurants">🥦 Vegan Restaurant List</li>
+        <li data-detail="Top 5 cost-effective lunch menus recommended">🍱 Best Value Lunch Top 5</li>
       </ul>
     </div>
-    <div id="rankingBox"><h4>🍽️ 인기 랭킹</h4><ol id="rankingList"></ol></div>
+    <div id="rankingBox"><h4>🍽️ Popular Ranking</h4><ol id="rankingList"></ol></div>
   </div>
   <div id="contentWrapper"></div>
   <aside id="noticeBox">
-    <h4>📢 공지사항</h4>
+    <h4>📢 Announcements</h4>
     <ul id="noticeList">
-      <li data-detail="맛집 추천 이벤트 진행 중입니다.">맛집 추천 받아요!</li>
-      <li data-detail="이번 주 일부 식당 20% 할인 중!">이번 주 할인 이벤트 진행중</li>
-      <li data-detail="신규 식당 등록 안내입니다.">신규 식당 등록 안내</li>
+      <li data-detail="Currently running restaurant recommendation event.">Submit your restaurant recommendations!</li>
+      <li data-detail="Some restaurants offer 20% discount this week!">This Week's Discount Event Ongoing</li>
+      <li data-detail="Instructions for new restaurant registration.">New Restaurant Registration Guide</li>
     </ul>
   </aside>
 </div>
-
 <script>
 const WHITE_IMG="https://via.placeholder.com/80x80/FFFFFF/FFFFFF?text=+";
-
 const data={
-"건대입구":[
-{name:"송화산시도삭면",menu:"비빔밥",addr:"서울 광진구 화양동 123-10",type:"한식",
+"Geondae Entrance":[
+{name:"Songhwa Mountain Sido Soup Noodles",menu:"Bibimbap",addr:"123-10, Huayang-dong, Gwangjin-gu, Seoul",type:"Korean",
 img:"https://ldb-phinf.pstatic.net/20171222_273/1513909993152wbpV8_JPEG/fM-4sk2LkYUe0jmd83plu51X.JPG.jpg",tags:["vegan"]},
-{name:"정면 건대",menu:"우동",addr:"서울 광진구 자양동 456-5",type:"일식",
+{name:"Jeongmyeon Geondae",menu:"Udon",addr:"456-5, Jayang-dong, Gwangjin-gu, Seoul",type:"Japanese",
 img:"https://ldb-phinf.pstatic.net/20221105_150/1667640635518fdmMX_JPEG/01_%25BE%25D7%25BC%25C7%25C4%25C6-6.jpg",tags:[]},
-{name:"모츠커피 건대",menu:"초밥",addr:"서울 광진구 화양동 78-3",type:"일식·카페",
+{name:"Mots Coffee Geondae",menu:"Sushi",addr:"78-3, Huayang-dong, Gwangjin-gu, Seoul",type:"Japanese·Cafe",
 img:"https://ldb-phinf.pstatic.net/20240910_185/1725956101822qU4L5_JPEG/KakaoTalk_Photo_2023-01-31-13-38-33.jpeg",tags:["vegan","under10k"]},
-{name:"하이디라오 건대점",menu:"닭한마리",addr:"서울 광진구 자양동 9-7",type:"중식",
+{name:"Haidilao Geondae Branch",menu:"Chicken One-pot",addr:"9-7, Jayang-dong, Gwangjin-gu, Seoul",type:"Chinese",
 img:"https://naverbooking-phinf.pstatic.net/20231025_91/1698209935312gkRt7_JPEG/%25CB%25EF%25D3%25DE%25EF%25C1.jpg",tags:["halal"]},
-{name:"우마이도 건대점",menu:"까르보나라",addr:"서울 광진구 군자역로 6-8",type:"양식",
+{name:"Umaido Geondae Branch",menu:"Carbonara",addr:"6-8, Gunja Station Road, Gwangjin-gu, Seoul",type:"Western",
 img:"https://ldb-phinf.pstatic.net/20250508_188/1746671048632zEGis_PNG/1000058982.png",tags:[]},
-{name:"미분당 건대",menu:"스테이크",addr:"서울 광진구 능동로 20-11",type:"양식",
+{name:"Mibundang Geondae",menu:"Steak",addr:"20-11, Neungdong-ro, Gwangjin-gu, Seoul",type:"Western",
 img:"https://ldb-phinf.pstatic.net/20240312_21/1710250327869PUFrG_JPEG/IMG_0124.jpeg",tags:["glutenfree"]},
-{name:"계탄집",menu:"짬뽕",addr:"서울 광진구 어린이대공원로 11-4",type:"중식",
+{name:"Gyetan House",menu:"Jjamppong",addr:"11-4, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Chinese",
 img:"https://pup-review-phinf.pstatic.net/MjAyNTA4MDNfMzYg/MDAxNzU0MjA5MDM4NjA0.JPEG/1000061462.jpg",tags:[]},
-{name:"핵밥 건대점",menu:"돈카츠",addr:"서울 광진구 건국대로 15-2",type:"일식",
+{name:"Haeckbab Geondae Branch",menu:"Tonkatsu",addr:"15-2, Konkuk University Road, Gwangjin-gu, Seoul",type:"Japanese",
 img:"https://ldb-phinf.pstatic.net/20250424_271/1745462663087VrIBz_JPEG/14.jpg",tags:["vegan","under10k"]},
-{name:"고베규카츠 건대본점",menu:"비빔밥",addr:"서울 광진구 자양로 122-6",type:"한식",
+{name:"Kobe Gyukatsu Geondae Main Branch",menu:"Bibimbap",addr:"122-6, Jayang-ro, Gwangjin-gu, Seoul",type:"Korean",
 img:"https://ldb-phinf.pstatic.net/20230329_272/1680084605093YCtTI_JPEG/KakaoTalk_20230329_174932601_04.jpg",tags:[]}
 ],
-"중문":[
-{name:"두찜 건대점",menu:"찜닭",addr:"서울 광진구 중곡동 12-3",type:"한식",img:WHITE_IMG,tags:[]},
-{name:"정면 국수",menu:"국수",addr:"서울 광진구 중곡동 8-9",type:"한식",img:WHITE_IMG,tags:[]},
-{name:"내가찜한닭 건국대점",menu:"닭갈비",addr:"서울 광진구 군자동 14-1",type:"한식",img:WHITE_IMG,tags:[]}
+"Jungmun":[
+{name:"Dujjim Geondae Branch",menu:"Steamed Chicken",addr:"12-3, Junggok-dong, Gwangjin-gu, Seoul",type:"Korean",img:WHITE_IMG,tags:[]},
+{name:"Jeongmyeon Noodles",menu:"Noodles",addr:"8-9, Junggok-dong, Gwangjin-gu, Seoul",type:"Korean",img:WHITE_IMG,tags:[]},
+{name:"My Steamed Chicken Konkuk Branch",menu:"Dak Galbi",addr:"14-1, Gunja-dong, Gwangjin-gu, Seoul",type:"Korean",img:WHITE_IMG,tags:[]}
 ],
-"후문":[
-{name:"시홍쓰 건대",menu:"볶음밥",addr:"서울 광진구 후문로 112-5",type:"중식",
+"Back Gate":[
+{name:"Sihongssu Geondae",menu:"Fried Rice",addr:"112-5, Back Gate Road, Gwangjin-gu, Seoul",type:"Chinese",
 img:"https://ldb-phinf.pstatic.net/20220712_282/16576252274583ilfO_JPEG/2AA67F98-63C8-482B-A6B3-7E3DAD363062.jpeg",tags:[]},
-{name:"새로이 건대",menu:"버거",addr:"서울 광진구 후문로 130-2",type:"버거류",img:WHITE_IMG,tags:[]},
-{name:"래빗홀 버거컴퍼니 건대",menu:"핸드메이드 버거",addr:"서울 광진구 후문길 18-7",type:"버거류",img:WHITE_IMG,tags:["under10k"]}
+{name:"Saeroyi Geondae",menu:"Burger",addr:"130-2, Back Gate Road, Gwangjin-gu, Seoul",type:"Burger",img:WHITE_IMG,tags:[]},
+{name:"Rabbit Hole Burger Company Geondae",menu:"Handmade Burger",addr:"18-7, Back Gate Street, Gwangjin-gu, Seoul",type:"Burger",img:WHITE_IMG,tags:["under10k"]}
 ],
-"어린이대공원":[
-{name:"에이뿔램 군자점",menu:"양고기구이",addr:"서울 광진구 군자동 50-1",type:"양식",img:WHITE_IMG,tags:[]},
-{name:"수퍼슬라이더스",menu:"버거",addr:"서울 광진구 어린이대공원로 15-6",type:"버거류",img:WHITE_IMG,tags:["under10k"]},
-{name:"혼다라멘",menu:"라멘",addr:"서울 광진구 자양동 20-4",type:"일식",img:WHITE_IMG,tags:[]},
-{name:"초라멘",menu:"라멘",addr:"서울 광진구 어린이대공원로 22-8",type:"일식",img:WHITE_IMG,tags:["glutenfree"]},
-{name:"꾸아 건대점",menu:"베트남 쌀국수",addr:"서울 광진구 광진로 88-9",type:"아시아식",img:WHITE_IMG,tags:["vegan"]},
-{name:"오마카세 오사이초밥 건대본점",menu:"초밥",addr:"서울 광진구 군자역로 77-12",type:"일식",img:WHITE_IMG,tags:[]}
+"Children's Grand Park":[
+{name:"Aplus Lamb Gunja Branch",menu:"Grilled Lamb",addr:"50-1, Gunja-dong, Gwangjin-gu, Seoul",type:"Western",img:WHITE_IMG,tags:[]},
+{name:"Supersliders",menu:"Burger",addr:"15-6, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Burger",img:WHITE_IMG,tags:["under10k"]},
+{name:"Honda Ramen",menu:"Ramen",addr:"20-4, Jayang-dong, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:[]},
+{name:"Cho Ramen",menu:"Ramen",addr:"22-8, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:["glutenfree"]},
+{name:"Kkua Geondae Branch",menu:"Vietnamese Pho",addr:"88-9, Gwangjin-ro, Gwangjin-gu, Seoul",type:"Asian",img:WHITE_IMG,tags:["vegan"]},
+{name:"Omakase Osai Sushi Geondae Main Branch",menu:"Sushi",addr:"77-12, Gunja Station Road, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:[]}
 ]
 };
 
-let restaurantClicks=JSON.parse(localStorage.getItem('restaurantClicks')||'{}');
-let currentCategory="전체", currentDietTags=[], currentPrice="";
+let currentCategory = "";
+let currentDietTags = [];
+let currentPrice = "";
 
 function filterRestaurants(){
   let list=[];
-  if(currentCategory==="전체"){list=Object.values(data).flat();}
+  if(!currentCategory){list=Object.values(data).flat();}
   else{list=data[currentCategory]||[];}
   if(currentDietTags.length) list=list.filter(r=>currentDietTags.every(tag=>r.tags.includes(tag)));
   if(currentPrice){
@@ -195,131 +192,216 @@ function filterRestaurants(){
   return list;
 }
 
-function increaseClick(name){
-  restaurantClicks[name]=(restaurantClicks[name]||0)+1;
-  localStorage.setItem('restaurantClicks',JSON.stringify(restaurantClicks));
+// Dummy data for visit counts to simulate server response
+// In real implementation, fetch this data from the server API
+let visitCounts = {
+  "Songhwa Mountain Sido Soup Noodles": 8,
+  "Jeongmyeon Geondae": 12,
+  "Mots Coffee Geondae": 10,
+  "Haidilao Geondae Branch": 6,
+  "Umaido Geondae Branch": 15,
+  "Mibundang Geondae": 7,
+  "Gyetan House": 4,
+  "Haeckbab Geondae Branch": 5,
+  "Kobe Gyukatsu Geondae Main Branch": 11,
+  // Add others as needed
+};
+
+// Simulate sending visit count increment to server
+async function sendVisitCountToServer(restaurantName){
+  return new Promise(resolve => {
+    setTimeout(() => {
+      if(visitCounts[restaurantName] === undefined) visitCounts[restaurantName] = 1;
+      else visitCounts[restaurantName]++;
+      resolve();
+    }, 100); // Simulate network delay
+  });
+}
+
+// Simulate fetching visit counts from server
+async function fetchVisitCountsFromServer(){
+  // In real implementation, fetch from server API
+  return new Promise(resolve => {
+    setTimeout(() => resolve(visitCounts), 100);
+  });
+}
+
+async function increaseClick(name){
+  await sendVisitCountToServer(name);
+  visitCounts = await fetchVisitCountsFromServer();
   updateRanking();
 }
+
 function updateRanking(){
-  const rl=document.getElementById('rankingList');rl.innerHTML="";
-  Object.entries(restaurantClicks).sort((a,b)=>b[1]-a[1]).slice(0,10).forEach(([name,count],i)=>{
-    const li=document.createElement('li');const left=document.createElement('div');left.className="rank-left";
+  const rl=document.getElementById('rankingList');
+  rl.innerHTML="";
+  const entries = Object.entries(visitCounts);
+  if(entries.length === 0){
+    rl.innerHTML = "<li>No ranking data available.</li>";
+    return;
+  }
+  entries.sort((a,b)=>b[1]-a[1]).slice(0,10).forEach(([name,count],i)=>{
+    const li=document.createElement('li');
+    const left=document.createElement('div');left.className="rank-left";
     if(i===0)left.innerHTML=`<span class="medal gold">1</span><span>${name}</span>`;
     else if(i===1)left.innerHTML=`<span class="medal silver">2</span><span>${name}</span>`;
     else if(i===2)left.innerHTML=`<span class="medal bronze">3</span><span>${name}</span>`;
     else left.innerHTML=`<span class="rank-number">${i+1}</span><span>${name}</span>`;
-    const right=document.createElement('div');right.className="rank-right";right.textContent=`${count}회`;
+    const right=document.createElement('div');right.className="rank-right";right.textContent=`${count} views`;
     li.append(left,right);
     li.onclick=()=>{const restaurant=Object.values(data).flat().find(r=>r.name===name);if(restaurant)openDetailView(restaurant);};
     rl.appendChild(li);
   });
 }
+
 function openDetailView(r){
   const cont=document.getElementById('contentWrapper');
   cont.innerHTML=`
-    <button id="backBtn">← 뒤로가기</button>
+    <button id="backBtn">← Back</button>
     <h2>${r.name}</h2>
     <div class="detail-container">
       <div class="detail-left">
-        <p><b>식당 소개:</b> ${r.name}의 대표 메뉴는 ${r.menu}이며, ${r.type} 전문점입니다.</p>
-        <p><b>위치:</b> ${r.addr}</p>
-        <p><b>운영시간:</b> 10:00 ~ 22:00 (예시)</p>
-        <p><b>키오스크 유무:</b> 있음</p>
-        <p><b>영어 메뉴판 유무:</b> 있음</p>
-        <p><b>태그:</b> ${r.tags.length ? r.tags.join(", ") : "없음"}</p>
+        <p><b>Restaurant Introduction:</b> ${r.name}'s signature menu is ${r.menu}, and it specializes in ${r.type} cuisine.</p>
+        <p><b>Location:</b> ${r.addr}</p>
+        <p><b>Operating Hours:</b> 10:00 ~ 22:00 (Example)</p>
+        <p><b>Kiosk Availability:</b> Available</p>
+        <p><b>English Menu Availability:</b> Available</p>
+        <p><b>Tags:</b> ${r.tags.length ? r.tags.join(", ") : "None"}</p>
       </div>
       <div class="detail-right">
         <img src="${r.img || WHITE_IMG}" style="width:100%;max-height:250px;object-fit:cover;border-radius:8px;" />
-        <p><b>메뉴 정보:</b> ${r.menu}는 ${r.type} 카테고리 내 인기 메뉴입니다.</p>
+        <p><b>Menu Info:</b> ${r.menu} is a popular dish in the ${r.type} category.</p>
       </div>
     </div>
     <div class="detail-section">
-      <h3>📌 추가 정보</h3>
-      <p>주차 가능 / 단체석 보유 / 예약 가능 (예시)</p>
+      <h3>📌 Additional Info</h3>
+      <p>Parking available / Group seating available / Reservations accepted (Example)</p>
     </div>
     <div class="detail-section">
-      <h3>⭐ 리뷰</h3>
-      <p>- "정말 맛있어요!"</p>
-      <p>- "또 방문하고 싶어요!"</p>
+      <h3>⭐ Reviews</h3>
+      <p>- "Really delicious!"</p>
+      <p>- "Want to visit again!"</p>
     </div>
   `;
   document.getElementById('backBtn').onclick = renderRestaurants;
 }
+
 function renderRestaurants(){
   const cont=document.getElementById('contentWrapper');
   cont.innerHTML=`
   <div class="filter-wrapper">
     <div class="filter-top">
-      <button class="all-btn${currentCategory === "전체" ? ' active' : ''}" id="allBtn">전체</button>
-      <button id="resetBtn">초기화</button>
+      <button id="resetBtn">Reset</button>
     </div>
     <div class="filter-group">
-      <div class="filter-title">위치</div>
+      <div class="filter-title">Area</div>
       <div class="filter-bar" id="categoryBar">
-        ${["건대입구","중문","후문","어린이대공원"].map(cat=>`<button class="${currentCategory===cat?'active':''}" data-cat="${cat}">${cat}</button>`).join("")}
+        ${["Geondae Entrance","Jungmun","Back Gate","Children's Grand Park"].map(cat=>`<button class="${currentCategory===cat?'active':''}" data-cat="${cat}">${cat}</button>`).join("")}
       </div>
     </div>
     <div class="filter-group">
-      <div class="filter-title">기호</div>
+      <div class="filter-title">Preference</div>
       <div class="filter-bar" id="dietBar">
         ${["vegan","halal","glutenfree","allergy"].map(tag=>`<button class="${currentDietTags.includes(tag)?'active':''}" data-tag="${tag}">${tag.charAt(0).toUpperCase()+tag.slice(1)}</button>`).join("")}
       </div>
     </div>
     <div class="filter-group">
-      <div class="filter-title">가격</div>
+      <div class="filter-title">Price</div>
       <div class="filter-bar" id="priceBar">
-        <button class="${currentPrice==="under7k" ? "active" : ""}" data-price="under7k">7000원 이하</button>
-        <button class="${currentPrice==="under14k" ? "active" : ""}" data-price="under14k">14000원 이하</button>
-        <button class="${currentPrice==="under20k" ? "active" : ""}" data-price="under20k">20000원 이하</button>
-        <button class="${currentPrice==="over20k" ? "active" : ""}" data-price="over20k">20000원 이상</button>
+        <button class="${currentPrice==="under7k" ? "active" : ""}" data-price="under7k">Under 7,000 KRW</button>
+        <button class="${currentPrice==="under14k" ? "active" : ""}" data-price="under14k">Under 14,000 KRW</button>
+        <button class="${currentPrice==="under20k" ? "active" : ""}" data-price="under20k">Under 20,000 KRW</button>
+        <button class="${currentPrice==="over20k" ? "active" : ""}" data-price="over20k">Over 20,000 KRW</button>
       </div>
     </div>
   </div>
   <section id="restaurantList"></section>
   `;
-  document.getElementById("allBtn").onclick = () => {currentCategory = "전체"; currentDietTags = []; currentPrice = ""; renderRestaurants();};
-  document.getElementById("resetBtn").onclick = () => {currentCategory = "전체"; currentDietTags = []; currentPrice = ""; renderRestaurants();};
-  document.querySelectorAll("#categoryBar button").forEach(btn => {btn.onclick = () => {
-    document.querySelectorAll("#categoryBar button").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active"); currentCategory = btn.dataset.cat; renderRestaurants();
-  };});
-  document.querySelectorAll("#dietBar button").forEach(btn => {btn.onclick = () => {
-    if(btn.classList.contains("active")){btn.classList.remove("active"); currentDietTags = [];}
-    else{document.querySelectorAll("#dietBar button").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active"); currentDietTags = [btn.dataset.tag];}
+  document.getElementById("resetBtn").onclick = () => {
+    currentCategory = "";
+    currentDietTags = [];
+    currentPrice = "";
     renderRestaurants();
-  };});
-  document.querySelectorAll("#priceBar button").forEach(btn => {btn.onclick = () => {
-    if(btn.classList.contains("active")){btn.classList.remove("active"); currentPrice = "";}
-    else{document.querySelectorAll("#priceBar button").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active"); currentPrice = btn.dataset.price;}
-    renderRestaurants();
-  };});
+  };
+  document.querySelectorAll("#categoryBar button").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("#categoryBar button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentCategory = btn.dataset.cat;
+      renderRestaurants();
+    };
+  });
+  document.querySelectorAll("#dietBar button").forEach(btn => {
+    btn.onclick = () => {
+      if(btn.classList.contains("active")){
+        btn.classList.remove("active");
+        currentDietTags = [];
+      }
+      else{
+        document.querySelectorAll("#dietBar button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentDietTags = [btn.dataset.tag];
+      }
+      renderRestaurants();
+    };
+  });
+  document.querySelectorAll("#priceBar button").forEach(btn => {
+    btn.onclick = () => {
+      if(btn.classList.contains("active")){
+        btn.classList.remove("active");
+        currentPrice = "";
+      }
+      else{
+        document.querySelectorAll("#priceBar button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentPrice = btn.dataset.price;
+      }
+      renderRestaurants();
+    };
+  });
   const list = filterRestaurants();
-  const lc = cont.querySelector("#restaurantList"); lc.innerHTML = "";
-  if(!list.length){lc.innerHTML = "<p>조건에 맞는 식당 없음</p>"; return;}
-  const ul=document.createElement("ul");ul.className = "restaurants";
+  const lc = cont.querySelector("#restaurantList");
+  lc.innerHTML = "";
+  if(!list.length){
+    lc.innerHTML = "<p>No restaurants match the selected criteria.</p>";
+    return;
+  }
+  const ul=document.createElement("ul");
+  ul.className = "restaurants";
   list.forEach(r => {
-    const li=document.createElement("li"); li.className = "restaurant-item";
+    const li=document.createElement("li");
+    li.className = "restaurant-item";
     li.innerHTML = `<img src="${r.img||WHITE_IMG}" class="thumb"/><div><b>${r.name}</b><div>${r.addr}</div><div>${r.type} | ${r.menu}</div></div>`;
-    li.onclick = () => {increaseClick(r.name); openDetailView(r);};
+    li.onclick = async () => {
+      await increaseClick(r.name);
+      openDetailView(r);
+    };
     ul.appendChild(li);
   });
   lc.appendChild(ul);
 }
+
 document.querySelectorAll("#noticeList li, #communityBox li").forEach(li => {
   li.onclick = () => {
     const detail = li.dataset.detail || li.textContent;
     const cont = document.getElementById("contentWrapper");
-    cont.innerHTML = `<button id="backBtn">← 뒤로가기</button><h2>${li.textContent}</h2><p>${detail}</p>`;
+    cont.innerHTML = `<button id="backBtn">← Back</button><h2>${li.textContent}</h2><p>${detail}</p>`;
     document.getElementById("backBtn").onclick = renderRestaurants;
   };
 });
 document.getElementById("siteName").onclick = () => {
-  currentCategory = "전체"; currentDietTags = []; currentPrice = ""; renderRestaurants();
+  currentCategory = "";
+  currentDietTags = [];
+  currentPrice = "";
+  renderRestaurants();
 };
-renderRestaurants();
-updateRanking();
+
+// Initialize on page load
+(async () => {
+  visitCounts = await fetchVisitCountsFromServer();
+  updateRanking();
+  renderRestaurants();
+})();
 </script>
 </body>
 </html>
