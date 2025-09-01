@@ -47,7 +47,6 @@
   .header-right {display:flex;gap:16px;align-items:center;position:static;}
   .header-link {color:#ad8e01;font-weight:650;text-decoration:none;font-size:1rem;
     padding:6px 12px;border-radius:6px;background:#fffde8;box-shadow:0 1px 3px rgba(0,0,0,0.1);cursor:pointer;}
-  /* Styles carried over as is */
   #mainWrapper{display:flex;max-width:1400px;margin:0 auto;gap:32px;align-items:flex-start;margin-top:160px;padding:0 20px;}
   #sideBar{display:flex;flex-direction:column;gap:28px;width:240px;}
   #communityBox,#rankingBox,#noticeBox{background:#fffbe7;border:2px solid #e7be17;border-radius:12px;padding:18px;box-shadow:0 2px 14px rgba(255,220,70,0.14);}
@@ -71,7 +70,7 @@
   .filter-top button{background:#ffe065;color:#856300;font-weight:600;padding:10px 20px;border:none;border-radius:6px;cursor:pointer;flex:none;}
   #resetBtn{background:#cccccc;color:#4e3900;padding:10px 20px;}
   .filter-group{display:flex;gap:16px;}
-  .filter-title{width:70px;font-weight:bold;color:#856300;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;}
+  .filter-title{width:90px;font-weight:bold;color:#856300;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;}
   .filter-bar{display:flex;gap:12px;flex:1;}
   .filter-bar button{flex:1;padding:10px 16px;background:#ffe065;border:none;border-radius:6px;cursor:pointer;font-weight:600;white-space:nowrap;}
   .filter-bar button.active{background:#ffe998;color:#d5ad00;}
@@ -100,7 +99,6 @@
     </div>
     <span id="siteName">yum.chive</span>
     <div class="header-right">
-      <!-- Login element removed -->
       <a href="#" class="header-link">Customer Service</a>
     </div>
   </div>
@@ -130,97 +128,83 @@
 <script>
 const WHITE_IMG="https://via.placeholder.com/80x80/FFFFFF/FFFFFF?text=+";
 const data={
-"Geondae Entrance":[
+"Kondae":[
 {name:"Songhwa Mountain Sido Soup Noodles",menu:"Bibimbap",addr:"123-10, Huayang-dong, Gwangjin-gu, Seoul",type:"Korean",
 img:"https://ldb-phinf.pstatic.net/20171222_273/1513909993152wbpV8_JPEG/fM-4sk2LkYUe0jmd83plu51X.JPG.jpg",tags:["vegan"]},
-{name:"Jeongmyeon Geondae",menu:"Udon",addr:"456-5, Jayang-dong, Gwangjin-gu, Seoul",type:"Japanese",
+{name:"Jeongmyeon kondae",menu:"Udon",addr:"456-5, Jayang-dong, Gwangjin-gu, Seoul",type:"Japanese",
 img:"https://ldb-phinf.pstatic.net/20221105_150/1667640635518fdmMX_JPEG/01_%25BE%25D7%25BC%25C7%25C4%25C6-6.jpg",tags:[]},
-{name:"Mots Coffee Geondae",menu:"Sushi",addr:"78-3, Huayang-dong, Gwangjin-gu, Seoul",type:"Japanese·Cafe",
+{name:"Mots Coffee kondae",menu:"Sushi",addr:"78-3, Huayang-dong, Gwangjin-gu, Seoul",type:"Japanese·Cafe",
 img:"https://ldb-phinf.pstatic.net/20240910_185/1725956101822qU4L5_JPEG/KakaoTalk_Photo_2023-01-31-13-38-33.jpeg",tags:["vegan","under10k"]},
-{name:"Haidilao Geondae Branch",menu:"Chicken One-pot",addr:"9-7, Jayang-dong, Gwangjin-gu, Seoul",type:"Chinese",
+{name:"Haidilao kondae Branch",menu:"Chicken One-pot",addr:"9-7, Jayang-dong, Gwangjin-gu, Seoul",type:"Chinese",
 img:"https://naverbooking-phinf.pstatic.net/20231025_91/1698209935312gkRt7_JPEG/%25CB%25EF%25D3%25DE%25EF%25C1.jpg",tags:["halal"]},
-{name:"Umaido Geondae Branch",menu:"Carbonara",addr:"6-8, Gunja Station Road, Gwangjin-gu, Seoul",type:"Western",
+{name:"Umaido kondae Branch",menu:"Carbonara",addr:"6-8, Gunja Station Road, Gwangjin-gu, Seoul",type:"Western",
 img:"https://ldb-phinf.pstatic.net/20250508_188/1746671048632zEGis_PNG/1000058982.png",tags:[]},
-{name:"Mibundang Geondae",menu:"Steak",addr:"20-11, Neungdong-ro, Gwangjin-gu, Seoul",type:"Western",
+{name:"Mibundang kondae",menu:"Steak",addr:"20-11, Neungdong-ro, Gwangjin-gu, Seoul",type:"Western",
 img:"https://ldb-phinf.pstatic.net/20240312_21/1710250327869PUFrG_JPEG/IMG_0124.jpeg",tags:["glutenfree"]},
 {name:"Gyetan House",menu:"Jjamppong",addr:"11-4, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Chinese",
 img:"https://pup-review-phinf.pstatic.net/MjAyNTA4MDNfMzYg/MDAxNzU0MjA5MDM4NjA0.JPEG/1000061462.jpg",tags:[]},
-{name:"Haeckbab Geondae Branch",menu:"Tonkatsu",addr:"15-2, Konkuk University Road, Gwangjin-gu, Seoul",type:"Japanese",
+{name:"Haeckbab kondae Branch",menu:"Tonkatsu",addr:"15-2, Konkuk University Road, Gwangjin-gu, Seoul",type:"Japanese",
 img:"https://ldb-phinf.pstatic.net/20250424_271/1745462663087VrIBz_JPEG/14.jpg",tags:["vegan","under10k"]},
-{name:"Kobe Gyukatsu Geondae Main Branch",menu:"Bibimbap",addr:"122-6, Jayang-ro, Gwangjin-gu, Seoul",type:"Korean",
+{name:"Kobe Gyukatsu kondae Main Branch",menu:"Bibimbap",addr:"122-6, Jayang-ro, Gwangjin-gu, Seoul",type:"Korean",
 img:"https://ldb-phinf.pstatic.net/20230329_272/1680084605093YCtTI_JPEG/KakaoTalk_20230329_174932601_04.jpg",tags:[]}
 ],
-"Jungmun":[
-{name:"Dujjim Geondae Branch",menu:"Steamed Chicken",addr:"12-3, Junggok-dong, Gwangjin-gu, Seoul",type:"Korean",img:WHITE_IMG,tags:[]},
-{name:"Jeongmyeon Noodles",menu:"Noodles",addr:"8-9, Junggok-dong, Gwangjin-gu, Seoul",type:"Korean",img:WHITE_IMG,tags:[]},
-{name:"My Steamed Chicken Konkuk Branch",menu:"Dak Galbi",addr:"14-1, Gunja-dong, Gwangjin-gu, Seoul",type:"Korean",img:WHITE_IMG,tags:[]}
-],
-"Back Gate":[
-{name:"Sihongssu Geondae",menu:"Fried Rice",addr:"112-5, Back Gate Road, Gwangjin-gu, Seoul",type:"Chinese",
-img:"https://ldb-phinf.pstatic.net/20220712_282/16576252274583ilfO_JPEG/2AA67F98-63C8-482B-A6B3-7E3DAD363062.jpeg",tags:[]},
-{name:"Saeroyi Geondae",menu:"Burger",addr:"130-2, Back Gate Road, Gwangjin-gu, Seoul",type:"Burger",img:WHITE_IMG,tags:[]},
-{name:"Rabbit Hole Burger Company Geondae",menu:"Handmade Burger",addr:"18-7, Back Gate Street, Gwangjin-gu, Seoul",type:"Burger",img:WHITE_IMG,tags:["under10k"]}
-],
-"Children's Grand Park":[
+"Children's Grand Park Station":[
 {name:"Aplus Lamb Gunja Branch",menu:"Grilled Lamb",addr:"50-1, Gunja-dong, Gwangjin-gu, Seoul",type:"Western",img:WHITE_IMG,tags:[]},
 {name:"Supersliders",menu:"Burger",addr:"15-6, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Burger",img:WHITE_IMG,tags:["under10k"]},
 {name:"Honda Ramen",menu:"Ramen",addr:"20-4, Jayang-dong, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:[]},
 {name:"Cho Ramen",menu:"Ramen",addr:"22-8, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:["glutenfree"]},
-{name:"Kkua Geondae Branch",menu:"Vietnamese Pho",addr:"88-9, Gwangjin-ro, Gwangjin-gu, Seoul",type:"Asian",img:WHITE_IMG,tags:["vegan"]},
-{name:"Omakase Osai Sushi Geondae Main Branch",menu:"Sushi",addr:"77-12, Gunja Station Road, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:[]}
+{name:"Kkua kondae Branch",menu:"Vietnamese Pho",addr:"88-9, Gwangjin-ro, Gwangjin-gu, Seoul",type:"Asian",img:WHITE_IMG,tags:["vegan"]},
+{name:"Omakase Osai Sushi kondae Main Branch",menu:"Sushi",addr:"77-12, Gunja Station Road, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:[]}
 ]
 };
-
 let currentCategory = "";
 let currentDietTags = [];
 let currentPrice = "";
 
+// 필터 함수 수정 (가격 필터 로직 반영)
 function filterRestaurants(){
   let list=[];
   if(!currentCategory){list=Object.values(data).flat();}
   else{list=data[currentCategory]||[];}
+
   if(currentDietTags.length) list=list.filter(r=>currentDietTags.every(tag=>r.tags.includes(tag)));
+
   if(currentPrice){
     list=list.filter(r=>{
-      if(currentPrice==="under7k") return r.tags.includes("under10k");
-      if(currentPrice==="under14k") return r.tags.includes("under10k");
-      if(currentPrice==="under20k") return r.tags.includes("under20k");
-      if(currentPrice==="over20k") return !r.tags.includes("under20k");
+      if(currentPrice==="under7k") return r.tags.includes("under10k"); // 기존 under10k 태그 사용
+      if(currentPrice==="7kto14k") return !r.tags.includes("under10k") && (r.tags.includes("under14k")||r.tags.includes("under10k"));
+      if(currentPrice==="over14k") return !r.tags.includes("under14k") && !r.tags.includes("under10k");
       return true;
     });
   }
+
   return list;
 }
 
-// Dummy data for visit counts to simulate server response
-// In real implementation, fetch this data from the server API
+// 방문수 관련 기존코드 유지
 let visitCounts = {
   "Songhwa Mountain Sido Soup Noodles": 8,
-  "Jeongmyeon Geondae": 12,
-  "Mots Coffee Geondae": 10,
-  "Haidilao Geondae Branch": 6,
-  "Umaido Geondae Branch": 15,
-  "Mibundang Geondae": 7,
+  "Jeongmyeon kondae": 12,
+  "Mots Coffee kondae": 10,
+  "Haidilao kondae Branch": 6,
+  "Umaido kondae Branch": 15,
+  "Mibundang kondae": 7,
   "Gyetan House": 4,
-  "Haeckbab Geondae Branch": 5,
-  "Kobe Gyukatsu Geondae Main Branch": 11,
-  // Add others as needed
+  "Haeckbab kondae Branch": 5,
+  "Kobe Gyukatsu kondae Main Branch": 11,
 };
 
-// Simulate sending visit count increment to server
 async function sendVisitCountToServer(restaurantName){
   return new Promise(resolve => {
     setTimeout(() => {
       if(visitCounts[restaurantName] === undefined) visitCounts[restaurantName] = 1;
       else visitCounts[restaurantName]++;
       resolve();
-    }, 100); // Simulate network delay
+    }, 100);
   });
 }
 
-// Simulate fetching visit counts from server
 async function fetchVisitCountsFromServer(){
-  // In real implementation, fetch from server API
   return new Promise(resolve => {
     setTimeout(() => resolve(visitCounts), 100);
   });
@@ -294,24 +278,23 @@ function renderRestaurants(){
       <button id="resetBtn">Reset</button>
     </div>
     <div class="filter-group">
-      <div class="filter-title">Area</div>
+      <div class="filter-title">Location</div>
       <div class="filter-bar" id="categoryBar">
-        ${["Geondae Entrance","Jungmun","Back Gate","Children's Grand Park"].map(cat=>`<button class="${currentCategory===cat?'active':''}" data-cat="${cat}">${cat}</button>`).join("")}
+        ${["Konkuk Univ. Station","Children's Grand Park Station"].map(cat=>`<button class="${currentCategory===cat?'active':''}" data-cat="${cat}">${cat}</button>`).join("")}
       </div>
     </div>
     <div class="filter-group">
-      <div class="filter-title">Preference</div>
+      <div class="filter-title">Options</div>
       <div class="filter-bar" id="dietBar">
-        ${["vegan","halal","glutenfree","allergy"].map(tag=>`<button class="${currentDietTags.includes(tag)?'active':''}" data-tag="${tag}">${tag.charAt(0).toUpperCase()+tag.slice(1)}</button>`).join("")}
+        ${["halal","vegan"].map(tag=>`<button class="${currentDietTags.includes(tag)?'active':''}" data-tag="${tag}">${tag.charAt(0).toUpperCase()+tag.slice(1)}</button>`).join("")}
       </div>
     </div>
     <div class="filter-group">
       <div class="filter-title">Price</div>
       <div class="filter-bar" id="priceBar">
         <button class="${currentPrice==="under7k" ? "active" : ""}" data-price="under7k">Under 7,000 KRW</button>
-        <button class="${currentPrice==="under14k" ? "active" : ""}" data-price="under14k">Under 14,000 KRW</button>
-        <button class="${currentPrice==="under20k" ? "active" : ""}" data-price="under20k">Under 20,000 KRW</button>
-        <button class="${currentPrice==="over20k" ? "active" : ""}" data-price="over20k">Over 20,000 KRW</button>
+        <button class="${currentPrice==="7kto14k" ? "active" : ""}" data-price="7kto14k">7,000 ~ 14,000 KRW</button>
+        <button class="${currentPrice==="over14k" ? "active" : ""}" data-price="over14k">Over 14,000 KRW</button>
       </div>
     </div>
   </div>
@@ -396,7 +379,6 @@ document.getElementById("siteName").onclick = () => {
   renderRestaurants();
 };
 
-// Initialize on page load
 (async () => {
   visitCounts = await fetchVisitCountsFromServer();
   updateRanking();
