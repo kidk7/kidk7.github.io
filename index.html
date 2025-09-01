@@ -108,9 +108,9 @@
     <div id="communityBox">
       <h4>🌟 Community</h4>
       <ul>
-        <li data-detail="Affordable restaurants recommended by Konkuk University students!">✨ Konkuk Affordable Restaurants</li>
-        <li data-detail="List of vegan-friendly restaurants">🥦 Vegan Restaurant List</li>
-        <li data-detail="Top 5 cost-effective lunch menus recommended">🍱 Best Value Lunch Top 5</li>
+        <li data-detail="Affordable restaurants recommended by Konkuk University students!">✨ Affordable Restaurants</li>
+        <li data-detail="List of vegan-friendly restaurants">🥦 Vegan Restaurant</li>
+        <li data-detail="Top 5 cost-effective lunch menus recommended">🍱 Best Value Top 5</li>
       </ul>
     </div>
     <div id="rankingBox"><h4>🍽️ Popular Ranking</h4><ol id="rankingList"></ol></div>
@@ -128,87 +128,94 @@
 <script>
 const WHITE_IMG="https://via.placeholder.com/80x80/FFFFFF/FFFFFF?text=+";
 const data={
-"Kondae":[
-{name:"Songhwa Mountain Sido Soup Noodles",menu:"Bibimbap",addr:"123-10, Huayang-dong, Gwangjin-gu, Seoul",type:"Korean",
-img:"https://ldb-phinf.pstatic.net/20171222_273/1513909993152wbpV8_JPEG/fM-4sk2LkYUe0jmd83plu51X.JPG.jpg",tags:["vegan"]},
-{name:"Jeongmyeon kondae",menu:"Udon",addr:"456-5, Jayang-dong, Gwangjin-gu, Seoul",type:"Japanese",
-img:"https://ldb-phinf.pstatic.net/20221105_150/1667640635518fdmMX_JPEG/01_%25BE%25D7%25BC%25C7%25C4%25C6-6.jpg",tags:[]},
-{name:"Mots Coffee kondae",menu:"Sushi",addr:"78-3, Huayang-dong, Gwangjin-gu, Seoul",type:"Japanese·Cafe",
-img:"https://ldb-phinf.pstatic.net/20240910_185/1725956101822qU4L5_JPEG/KakaoTalk_Photo_2023-01-31-13-38-33.jpeg",tags:["vegan","under10k"]},
-{name:"Haidilao kondae Branch",menu:"Chicken One-pot",addr:"9-7, Jayang-dong, Gwangjin-gu, Seoul",type:"Chinese",
-img:"https://naverbooking-phinf.pstatic.net/20231025_91/1698209935312gkRt7_JPEG/%25CB%25EF%25D3%25DE%25EF%25C1.jpg",tags:["halal"]},
-{name:"Umaido kondae Branch",menu:"Carbonara",addr:"6-8, Gunja Station Road, Gwangjin-gu, Seoul",type:"Western",
-img:"https://ldb-phinf.pstatic.net/20250508_188/1746671048632zEGis_PNG/1000058982.png",tags:[]},
-{name:"Mibundang kondae",menu:"Steak",addr:"20-11, Neungdong-ro, Gwangjin-gu, Seoul",type:"Western",
-img:"https://ldb-phinf.pstatic.net/20240312_21/1710250327869PUFrG_JPEG/IMG_0124.jpeg",tags:["glutenfree"]},
-{name:"Gyetan House",menu:"Jjamppong",addr:"11-4, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Chinese",
-img:"https://pup-review-phinf.pstatic.net/MjAyNTA4MDNfMzYg/MDAxNzU0MjA5MDM4NjA0.JPEG/1000061462.jpg",tags:[]},
-{name:"Haeckbab kondae Branch",menu:"Tonkatsu",addr:"15-2, Konkuk University Road, Gwangjin-gu, Seoul",type:"Japanese",
-img:"https://ldb-phinf.pstatic.net/20250424_271/1745462663087VrIBz_JPEG/14.jpg",tags:["vegan","under10k"]},
-{name:"Kobe Gyukatsu kondae Main Branch",menu:"Bibimbap",addr:"122-6, Jayang-ro, Gwangjin-gu, Seoul",type:"Korean",
-img:"https://ldb-phinf.pstatic.net/20230329_272/1680084605093YCtTI_JPEG/KakaoTalk_20230329_174932601_04.jpg",tags:[]}
-],
-"Children's Grand Park Station":[
-{name:"Aplus Lamb Gunja Branch",menu:"Grilled Lamb",addr:"50-1, Gunja-dong, Gwangjin-gu, Seoul",type:"Western",img:WHITE_IMG,tags:[]},
-{name:"Supersliders",menu:"Burger",addr:"15-6, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Burger",img:WHITE_IMG,tags:["under10k"]},
-{name:"Honda Ramen",menu:"Ramen",addr:"20-4, Jayang-dong, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:[]},
-{name:"Cho Ramen",menu:"Ramen",addr:"22-8, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:["glutenfree"]},
-{name:"Kkua kondae Branch",menu:"Vietnamese Pho",addr:"88-9, Gwangjin-ro, Gwangjin-gu, Seoul",type:"Asian",img:WHITE_IMG,tags:["vegan"]},
-{name:"Omakase Osai Sushi kondae Main Branch",menu:"Sushi",addr:"77-12, Gunja Station Road, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:[]}
-]
+  "Kondae":[
+    {name:"Songhwa Mountain Sido Soup Noodles", koreanName:"송화산 시도국수", menu:"Bibimbap",addr:"123-10, Huayang-dong, Gwangjin-gu, Seoul",type:"Korean",
+    img:"https://ldb-phinf.pstatic.net/20171222_273/1513909993152wbpV8_JPEG/fM-4sk2LkYUe0jmd83plu51X.JPG.jpg",tags:["vegan"]},
+    {name:"Jeongmyeon kondae", koreanName:"정면condae", menu:"Udon",addr:"456-5, Jayang-dong, Gwangjin-gu, Seoul",type:"Japanese",
+    img:"https://ldb-phinf.pstatic.net/20221105_150/1667640635518fdmMX_JPEG/01_%25BE%25D7%25BC%25C7%25C4%25C6-6.jpg",tags:[]},
+    {name:"Mots Coffee kondae", koreanName:"모츠커피condae", menu:"Sushi",addr:"78-3, Huayang-dong, Gwangjin-gu, Seoul",type:"Japanese·Cafe",
+    img:"https://ldb-phinf.pstatic.net/20240910_185/1725956101822qU4L5_JPEG/KakaoTalk_Photo_2023-01-31-13-38-33.jpeg",tags:["vegan","under10k"]},
+    {name:"Haidilao kondae Branch", koreanName:"하이디라오condae 지점", menu:"Chicken One-pot",addr:"9-7, Jayang-dong, Gwangjin-gu, Seoul",type:"Chinese",
+    img:"https://naverbooking-phinf.pstatic.net/20231025_91/1698209935312gkRt7_JPEG/%25CB%25EF%25D3%25DE%25EF%25C1.jpg",tags:["halal"]},
+    {name:"Umaido kondae Branch", koreanName:"우마이도condae 지점", menu:"Carbonara",addr:"6-8, Gunja Station Road, Gwangjin-gu, Seoul",type:"Western",
+    img:"https://ldb-phinf.pstatic.net/20250508_188/1746671048632zEGis_PNG/1000058982.png",tags:[]},
+    {name:"Mibundang kondae", koreanName:"미분당condae", menu:"Steak",addr:"20-11, Neungdong-ro, Gwangjin-gu, Seoul",type:"Western",
+    img:"https://ldb-phinf.pstatic.net/20240312_21/1710250327869PUFrG_JPEG/IMG_0124.jpeg",tags:["glutenfree"]},
+    {name:"Gyetan House", koreanName:"계탄하우스", menu:"Jjamppong",addr:"11-4, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Chinese",
+    img:"https://pup-review-phinf.pstatic.net/MjAyNTA4MDNfMzYg/MDAxNzU0MjA5MDM4NjA0.JPEG/1000061462.jpg",tags:[]},
+    {name:"Haeckbab kondae Branch", koreanName:"핵밥condae 지점", menu:"Tonkatsu",addr:"15-2, Konkuk University Road, Gwangjin-gu, Seoul",type:"Japanese",
+    img:"https://ldb-phinf.pstatic.net/20250424_271/1745462663087VrIBz_JPEG/14.jpg",tags:["vegan","under10k"]},
+    {name:"Kobe Gyukatsu kondae Main Branch", koreanName:"고베 규카츠condae 본점", menu:"Bibimbap",addr:"122-6, Jayang-ro, Gwangjin-gu, Seoul",type:"Korean",
+    img:"https://ldb-phinf.pstatic.net/20230329_272/1680084605093YCtTI_JPEG/KakaoTalk_20230329_174932601_04.jpg",tags:[]}
+  ],
+  "Children's Grand Park Station":[
+    {name:"Aplus Lamb Gunja Branch", koreanName:"에이플러스 램 건자 지점", menu:"Grilled Lamb",addr:"50-1, Gunja-dong, Gwangjin-gu, Seoul",type:"Western",img:WHITE_IMG,tags:[]},
+    {name:"Supersliders", koreanName:"슈퍼슬라이더스", menu:"Burger",addr:"15-6, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Burger",img:WHITE_IMG,tags:["under10k"]},
+    {name:"Honda Ramen", koreanName:"혼다 라멘", menu:"Ramen",addr:"20-4, Jayang-dong, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:[]},
+    {name:"Cho Ramen", koreanName:"초 라멘", menu:"Ramen",addr:"22-8, Children's Grand Park Road, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:["glutenfree"]},
+    {name:"Kkua kondae Branch", koreanName:"꾸아 kondae 지점", menu:"Vietnamese Pho",addr:"88-9, Gwangjin-ro, Gwangjin-gu, Seoul",type:"Asian",img:WHITE_IMG,tags:["vegan"]},
+    {name:"Omakase Osai Sushi kondae Main Branch", koreanName:"오마카세 오사이 스시 kondae 본점", menu:"Sushi",addr:"77-12, Gunja Station Road, Gwangjin-gu, Seoul",type:"Japanese",img:WHITE_IMG,tags:[]}
+  ]
 };
+
 let currentCategory = "";
 let currentDietTags = [];
 let currentPrice = "";
 
-// 필터 함수 수정 (가격 필터 로직 반영)
+// 백엔드 API 엔드포인트 예제 (필요시 변경)
+const API_BASE_URL = "https://your-backend.example.com/api";
+
+// 필터 함수
 function filterRestaurants(){
-  let list=[];
-  if(!currentCategory){list=Object.values(data).flat();}
-  else{list=data[currentCategory]||[];}
-
-  if(currentDietTags.length) list=list.filter(r=>currentDietTags.every(tag=>r.tags.includes(tag)));
-
+  let list = [];
+  if(!currentCategory){ list = Object.values(data).flat(); }
+  else{ list = data[currentCategory] || []; }
+  if(currentDietTags.length) list = list.filter(r => currentDietTags.every(tag => r.tags.includes(tag)));
   if(currentPrice){
-    list=list.filter(r=>{
-      if(currentPrice==="under7k") return r.tags.includes("under10k"); // 기존 under10k 태그 사용
+    list = list.filter(r => {
+      if(currentPrice==="under7k") return r.tags.includes("under10k");
       if(currentPrice==="7kto14k") return !r.tags.includes("under10k") && (r.tags.includes("under14k")||r.tags.includes("under10k"));
       if(currentPrice==="over14k") return !r.tags.includes("under14k") && !r.tags.includes("under10k");
       return true;
     });
   }
-
   return list;
 }
 
-// 방문수 관련 기존코드 유지
-let visitCounts = {
-  "Songhwa Mountain Sido Soup Noodles": 8,
-  "Jeongmyeon kondae": 12,
-  "Mots Coffee kondae": 10,
-  "Haidilao kondae Branch": 6,
-  "Umaido kondae Branch": 15,
-  "Mibundang kondae": 7,
-  "Gyetan House": 4,
-  "Haeckbab kondae Branch": 5,
-  "Kobe Gyukatsu kondae Main Branch": 11,
-};
-
+// 방문수 증가 API 호출
 async function sendVisitCountToServer(restaurantName){
-  return new Promise(resolve => {
-    setTimeout(() => {
-      if(visitCounts[restaurantName] === undefined) visitCounts[restaurantName] = 1;
-      else visitCounts[restaurantName]++;
-      resolve();
-    }, 100);
-  });
+  try {
+    const res = await fetch(`${API_BASE_URL}/visits/increment`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({name: restaurantName})
+    });
+    if(!res.ok) {
+      console.error("Failed to increment visit count");
+    }
+  } catch(e) {
+    console.error("Error in sendVisitCountToServer:", e);
+  }
 }
 
+// 랭킹 정보 API 호출
 async function fetchVisitCountsFromServer(){
-  return new Promise(resolve => {
-    setTimeout(() => resolve(visitCounts), 100);
-  });
+  try {
+    const res = await fetch(`${API_BASE_URL}/visits/ranking`);
+    if(res.ok){
+      const json = await res.json();
+      return json; // [{name:"...",count:...}, ...]
+    } else {
+      console.error("Failed to fetch ranking data");
+      return [];
+    }
+  } catch(e) {
+    console.error("Error in fetchVisitCountsFromServer:", e);
+    return [];
+  }
 }
+
+let visitCounts = [];
 
 async function increaseClick(name){
   await sendVisitCountToServer(name);
@@ -217,35 +224,43 @@ async function increaseClick(name){
 }
 
 function updateRanking(){
-  const rl=document.getElementById('rankingList');
-  rl.innerHTML="";
-  const entries = Object.entries(visitCounts);
-  if(entries.length === 0){
+  const rl = document.getElementById('rankingList');
+  rl.innerHTML = "";
+  if(!visitCounts.length){
     rl.innerHTML = "<li>No ranking data available.</li>";
     return;
   }
-  entries.sort((a,b)=>b[1]-a[1]).slice(0,10).forEach(([name,count],i)=>{
-    const li=document.createElement('li');
-    const left=document.createElement('div');left.className="rank-left";
-    if(i===0)left.innerHTML=`<span class="medal gold">1</span><span>${name}</span>`;
-    else if(i===1)left.innerHTML=`<span class="medal silver">2</span><span>${name}</span>`;
-    else if(i===2)left.innerHTML=`<span class="medal bronze">3</span><span>${name}</span>`;
-    else left.innerHTML=`<span class="rank-number">${i+1}</span><span>${name}</span>`;
-    const right=document.createElement('div');right.className="rank-right";right.textContent=`${count} views`;
-    li.append(left,right);
-    li.onclick=()=>{const restaurant=Object.values(data).flat().find(r=>r.name===name);if(restaurant)openDetailView(restaurant);};
+  visitCounts.slice(0, 10).forEach(({name, count}, i) => {
+    const li = document.createElement('li');
+    const left = document.createElement('div'); left.className = "rank-left";
+    // 한글 이름 찾아서 추가
+    const restaurant = Object.values(data).flat().find(r => r.name === name);
+    const koreanName = restaurant ? restaurant.koreanName : "";
+    const displayName = koreanName ? `${name} ㅣ ${koreanName}` : name;
+
+    if(i === 0) left.innerHTML = `<span class="medal gold">1</span><span>${displayName}</span>`;
+    else if(i === 1) left.innerHTML = `<span class="medal silver">2</span><span>${displayName}</span>`;
+    else if(i === 2) left.innerHTML = `<span class="medal bronze">3</span><span>${displayName}</span>`;
+    else left.innerHTML = `<span class="rank-number">${i + 1}</span><span>${displayName}</span>`;
+
+    const right = document.createElement('div'); right.className = "rank-right"; right.textContent = `${count} views`;
+    li.append(left, right);
+    li.onclick = () => {
+      if(restaurant) openDetailView(restaurant);
+    };
     rl.appendChild(li);
   });
 }
 
 function openDetailView(r){
-  const cont=document.getElementById('contentWrapper');
-  cont.innerHTML=`
+  const cont = document.getElementById('contentWrapper');
+  const displayName = r.koreanName ? `${r.name} ㅣ ${r.koreanName}` : r.name;
+  cont.innerHTML = `
     <button id="backBtn">← Back</button>
-    <h2>${r.name}</h2>
+    <h2>${displayName}</h2>
     <div class="detail-container">
       <div class="detail-left">
-        <p><b>Restaurant Introduction:</b> ${r.name}'s signature menu is ${r.menu}, and it specializes in ${r.type} cuisine.</p>
+        <p><b>Restaurant Introduction:</b> ${displayName}'s signature menu is ${r.menu}, and it specializes in ${r.type} cuisine.</p>
         <p><b>Location:</b> ${r.addr}</p>
         <p><b>Operating Hours:</b> 10:00 ~ 22:00 (Example)</p>
         <p><b>Kiosk Availability:</b> Available</p>
@@ -271,8 +286,8 @@ function openDetailView(r){
 }
 
 function renderRestaurants(){
-  const cont=document.getElementById('contentWrapper');
-  cont.innerHTML=`
+  const cont = document.getElementById('contentWrapper');
+  cont.innerHTML = `
   <div class="filter-wrapper">
     <div class="filter-top">
       <button id="resetBtn">Reset</button>
@@ -280,32 +295,38 @@ function renderRestaurants(){
     <div class="filter-group">
       <div class="filter-title">Location</div>
       <div class="filter-bar" id="categoryBar">
-        ${["Konkuk Univ. Station","Children's Grand Park Station"].map(cat=>`<button class="${currentCategory===cat?'active':''}" data-cat="${cat}">${cat}</button>`).join("")}
+        ${["Konkuk Univ. Station","Children's Grand Park Station"].map(cat =>
+          `<button class="${currentCategory === cat ? 'active' : ''}" data-cat="${cat}">${cat}</button>`
+        ).join("")}
       </div>
     </div>
     <div class="filter-group">
       <div class="filter-title">Options</div>
       <div class="filter-bar" id="dietBar">
-        ${["halal","vegan"].map(tag=>`<button class="${currentDietTags.includes(tag)?'active':''}" data-tag="${tag}">${tag.charAt(0).toUpperCase()+tag.slice(1)}</button>`).join("")}
+        ${["halal","vegan"].map(tag =>
+          `<button class="${currentDietTags.includes(tag) ? 'active' : ''}" data-tag="${tag}">${tag.charAt(0).toUpperCase() + tag.slice(1)}</button>`
+        ).join("")}
       </div>
     </div>
     <div class="filter-group">
       <div class="filter-title">Price</div>
       <div class="filter-bar" id="priceBar">
-        <button class="${currentPrice==="under7k" ? "active" : ""}" data-price="under7k">Under 7,000 KRW</button>
-        <button class="${currentPrice==="7kto14k" ? "active" : ""}" data-price="7kto14k">7,000 ~ 14,000 KRW</button>
-        <button class="${currentPrice==="over14k" ? "active" : ""}" data-price="over14k">Over 14,000 KRW</button>
+        <button class="${currentPrice === "under7k" ? "active" : ""}" data-price="under7k">Under 7,000 KRW</button>
+        <button class="${currentPrice === "7kto14k" ? "active" : ""}" data-price="7kto14k">7,000 ~ 14,000 KRW</button>
+        <button class="${currentPrice === "over14k" ? "active" : ""}" data-price="over14k">Over 14,000 KRW</button>
       </div>
     </div>
   </div>
   <section id="restaurantList"></section>
   `;
+
   document.getElementById("resetBtn").onclick = () => {
     currentCategory = "";
     currentDietTags = [];
     currentPrice = "";
     renderRestaurants();
   };
+
   document.querySelectorAll("#categoryBar button").forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll("#categoryBar button").forEach(b => b.classList.remove("active"));
@@ -314,13 +335,13 @@ function renderRestaurants(){
       renderRestaurants();
     };
   });
+
   document.querySelectorAll("#dietBar button").forEach(btn => {
     btn.onclick = () => {
       if(btn.classList.contains("active")){
         btn.classList.remove("active");
         currentDietTags = [];
-      }
-      else{
+      } else {
         document.querySelectorAll("#dietBar button").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         currentDietTags = [btn.dataset.tag];
@@ -328,13 +349,13 @@ function renderRestaurants(){
       renderRestaurants();
     };
   });
+
   document.querySelectorAll("#priceBar button").forEach(btn => {
     btn.onclick = () => {
       if(btn.classList.contains("active")){
         btn.classList.remove("active");
         currentPrice = "";
-      }
-      else{
+      } else {
         document.querySelectorAll("#priceBar button").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         currentPrice = btn.dataset.price;
@@ -342,6 +363,7 @@ function renderRestaurants(){
       renderRestaurants();
     };
   });
+
   const list = filterRestaurants();
   const lc = cont.querySelector("#restaurantList");
   lc.innerHTML = "";
@@ -349,12 +371,13 @@ function renderRestaurants(){
     lc.innerHTML = "<p>No restaurants match the selected criteria.</p>";
     return;
   }
-  const ul=document.createElement("ul");
+  const ul = document.createElement("ul");
   ul.className = "restaurants";
   list.forEach(r => {
-    const li=document.createElement("li");
+    const displayName = r.koreanName ? `${r.name} ㅣ ${r.koreanName}` : r.name;
+    const li = document.createElement("li");
     li.className = "restaurant-item";
-    li.innerHTML = `<img src="${r.img||WHITE_IMG}" class="thumb"/><div><b>${r.name}</b><div>${r.addr}</div><div>${r.type} | ${r.menu}</div></div>`;
+    li.innerHTML = `<img src="${r.img||WHITE_IMG}" class="thumb"/><div><b>${displayName}</b><div>${r.addr}</div><div>${r.type} | ${r.menu}</div></div>`;
     li.onclick = async () => {
       await increaseClick(r.name);
       openDetailView(r);
@@ -372,6 +395,7 @@ document.querySelectorAll("#noticeList li, #communityBox li").forEach(li => {
     document.getElementById("backBtn").onclick = renderRestaurants;
   };
 });
+
 document.getElementById("siteName").onclick = () => {
   currentCategory = "";
   currentDietTags = [];
@@ -379,6 +403,7 @@ document.getElementById("siteName").onclick = () => {
   renderRestaurants();
 };
 
+// 초기 데이터 로드 및 UI 초기화
 (async () => {
   visitCounts = await fetchVisitCountsFromServer();
   updateRanking();
